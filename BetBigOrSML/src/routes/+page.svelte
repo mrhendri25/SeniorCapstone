@@ -1,5 +1,9 @@
 <script>
     let title = 'BetBigOrSML'
+
+    const updateTitle = () => {
+        title = "LMSrOgiBteB"
+    }
 </script>
 
 <div class="index">
@@ -15,6 +19,7 @@
         non proident, sunt in culpa qui officia deserunt mollit 
         anim id est laborum.
     </p>
+    <button on:click={updateTitle}>change title</button>
 </div>
 
 <style>
