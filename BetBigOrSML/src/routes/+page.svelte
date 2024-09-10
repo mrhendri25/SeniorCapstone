@@ -1,9 +1,9 @@
 <script>
-
+    let title = 'BetBigOrSML'
 </script>
 
 <div class="index">
-    <h1>BetBigOrSML</h1>
+    <h1>{title}</h1>
     <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
         sed do eiusmod tempor incididunt ut labore et dolore   
