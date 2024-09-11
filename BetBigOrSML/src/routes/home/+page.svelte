@@ -1,9 +1,9 @@
 <script>
-    let title = 'BetBigOrSML'
+    let title = 'BetBigOrSML';
 
     const updateTitle = () => {
-        title = "LMSrOgiBteB"
-    }
+        title = "LMSrOgiBteB";
+    };
 </script>
 
 <div class="index">
@@ -20,6 +20,12 @@
         anim id est laborum.
     </p>
     <button on:click={updateTitle}>change title</button>
+    
+    <!-- Navigation Links -->
+    <nav>
+        <a href="/gamestats">Game Stats</a> |
+        <a href="/about">About Us</a>
+    </nav>
 </div>
 
 <style>
@@ -27,5 +33,16 @@
         text-align: center;
         display: block;
         margin: 20px auto;
+    }
+    nav {
+        margin-top: 20px;
+    }
+    a {
+        margin: 0 10px;
+        text-decoration: none;
+        color: blue;
+    }
+    a:hover {
+        text-decoration: underline;
     }
 </style>
