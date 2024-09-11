@@ -1,3 +1,8 @@
+<script>
+    import Title from '$lib/title.svelte'
+</script>
+
+<Title />
 <div class="about">
     <h2>
         About Us
@@ -10,6 +15,7 @@
         neque placeat accusamus tempore? Consectetur repudiandae dolorem veniam corporis, 
         qui nam voluptas! Fugiat iusto consequatur rem delectus.
     </p>
+    <a href="/">Home</a>
 </div>
 
 <style>
