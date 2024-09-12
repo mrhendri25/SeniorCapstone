@@ -1,11 +1,9 @@
 <script>
     let title = 'BetBigOrSML'
-
-    const updateTitle = () => {
-        title = "LMSrOgiBteB"
-    }
+    import Title from '$lib/title.svelte'
 </script>
 
+<Title/>
 <div class="index">
     <h1>{title}</h1>
     <p>
@@ -19,7 +17,7 @@
         non proident, sunt in culpa qui officia deserunt mollit 
         anim id est laborum.
     </p>
-    <button on:click={updateTitle}>change title</button>
+    <a href="/about">About Us</a>
 </div>
 
 <style>
