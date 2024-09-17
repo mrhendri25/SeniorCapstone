@@ -1,0 +1,10 @@
+body {
+    background: #3c3530;
+    margin: 0;
+}
+h1,h2,h3,h4,a,p,li {
+    color: darkgray;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight: normal;
+}
+
