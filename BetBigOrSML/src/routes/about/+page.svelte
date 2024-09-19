@@ -38,7 +38,7 @@
         Hes not a really good guy that I trust
     </p>
 
-    <img src="Luka_Headshot.jpg" width="480px" height="600px" alt="LDH">
+    <img src="Luka_Headshot.jpg" width="480px" height="601px" alt="LDH">
 </div>
 
 <div class="sam">
