@@ -18,6 +18,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"svelte-preprocess": "^6.0.2"
+		"svelte-preprocess": "^6.0.2",
+		"xlsx": "^0.18.5"
 	}
 }

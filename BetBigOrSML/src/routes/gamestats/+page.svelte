@@ -1,9 +1,20 @@
 <script lang="ts">
-  // Placeholder data for structure
-  let upcomingGames = [
-    { HomeTeam: "Team A", AwayTeam: "Team B", Date: "2024-09-15", Stadium: "Stadium A" },
-    { HomeTeam: "Team C", AwayTeam: "Team D", Date: "2024-09-16", Stadium: "Stadium B" }
-  ];
+  let upcomingGames = [];
+
+  async function fetchUpcomingGames() {
+  try {
+    const res = await fetch('http://localhost:3000/api/nfl-schedule');
+    if (!res.ok) {
+      throw new Error('Failed to fetch data');
+    }
+    upcomingGames = await res.json();
+    console.log('Fetched games:', upcomingGames);
+  } catch (error) {
+    console.error('Error fetching upcoming games:', error);
+  }
+}
+
+  fetchUpcomingGames();
 
   let comparisonTeams = [
     { team: "Team A", offenseRank: 5, defenseRank: 3 },

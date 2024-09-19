@@ -2,7 +2,6 @@
     
 </script>
 
-
 <div class="index">
     <h1>Welcome</h1>
     <p>
@@ -16,7 +15,8 @@
         non proident, sunt in culpa qui officia deserunt mollit 
         anim id est laborum.
     </p>
-    <a href="/about">About Us</a>
+    <a href="/about">About Us</a> |
+    <a href="/gamestats">Statistics</a>
 </div>
 
 <style>
