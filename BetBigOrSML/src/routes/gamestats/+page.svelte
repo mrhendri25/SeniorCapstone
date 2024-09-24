@@ -2,26 +2,28 @@
   let upcomingGames = [];
 
   async function fetchUpcomingGames() {
-  try {
-    const res = await fetch('http://localhost:3000/api/nfl-schedule');
-    if (!res.ok) {
-      throw new Error('Failed to fetch data');
+    try {
+      const res = await fetch("http://localhost:3000/api/nfl-schedule");
+      if (!res.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      upcomingGames = await res.json();
+      console.log("Fetched games:", upcomingGames);
+    } catch (error) {
+      console.error("Error fetching upcoming games:", error);
     }
-    upcomingGames = await res.json();
-    console.log('Fetched games:', upcomingGames);
-  } catch (error) {
-    console.error('Error fetching upcoming games:', error);
   }
-}
 
   fetchUpcomingGames();
 
   let comparisonTeams = [
     { team: "Team A", offenseRank: 5, defenseRank: 3 },
-    { team: "Team B", offenseRank: 8, defenseRank: 6 }
+    { team: "Team B", offenseRank: 8, defenseRank: 6 },
   ];
 
-  let dummyDataForVisualizations = [/* empty for now, to be used for future charts */];
+  let dummyDataForVisualizations = [
+    /* empty for now, to be used for future charts */
+  ];
 </script>
 
 <h1>NFL Betting Platform</h1>
@@ -32,8 +34,8 @@
   <ul>
     {#each upcomingGames as game}
       <li>
-        <strong>{game.HomeTeam} vs {game.AwayTeam}</strong> 
-        - {new Date(game.Date).toLocaleDateString()} 
+        <strong>{game.HomeTeam} vs {game.AwayTeam}</strong>
+        - {new Date(game.Date).toLocaleDateString()}
         @ {game.Stadium}
       </li>
     {/each}
@@ -66,9 +68,15 @@
 <!-- Section: Data Visualizations -->
 <section>
   <h2>Data Visualization</h2>
-  <p>This section will feature charts and graphs showing team performance, trends, and more.</p>
+  <p>
+    This section will feature charts and graphs showing team performance,
+    trends, and more.
+  </p>
   <!-- Placeholder for future chart/graph components -->
-  <div class="chart-placeholder" style="width:100%; height:300px; background-color:#eaeaea; display:flex; align-items:center; justify-content:center;">
+  <div
+    class="chart-placeholder"
+    style="width:100%; height:300px; background-color:#eaeaea; display:flex; align-items:center; justify-content:center;"
+  >
     <strong>Charts/Graphs will go here</strong>
   </div>
 </section>
@@ -83,7 +91,8 @@
     border-collapse: collapse;
   }
 
-  th, td {
+  th,
+  td {
     border: 1px solid #ddd;
     padding: 8px;
   }
