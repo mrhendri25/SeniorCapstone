@@ -1,9 +1,9 @@
 body {
-    background: #3c3530;
+    background: #7f7f7f;
     margin: 0;
 }
 h1,h2,h3,h4,a,p,li {
-    color: darkgray;
+    color: rgb(33, 26, 26);
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-weight: normal;
 }

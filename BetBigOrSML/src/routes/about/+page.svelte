@@ -1,40 +1,50 @@
 <script>
 </script>
 
+<!-- PUT RESUMES ON THE OPPOSITE SIDE OF THE PAGE TO THE RESPECTED PICTURE -->
+
 <div class="about">
   <h1>About Us</h1>
 
   <p>
-    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque inventore
-    cum maxime dicta molestiae consectetur ratione rem mollitia hic enim
-    consequatur corrupti, maiores sit sint dolor debitis dolorum voluptas!
-    Itaque esse at amet similique repudiandae atque rerum, assumenda, eius
-    animi, quod odio laudantium neque placeat accusamus tempore? Consectetur
-    repudiandae dolorem veniam corporis, qui nam voluptas! Fugiat iusto
-    consequatur rem delectus.
+    Hello everyone and thank you so much for using our website! Here, we wanted
+    to share a little about ourselves along with our resumes. The name
+    'BetBigOrSML' comes from our names combined into one acronym that sounds
+    like the word small. We hope you enjoy and any feedback is welcome!
   </p>
   <a href="/">Home</a>
 </div>
 
-<div class="matt">
+<div class="head_shots">
+  <img
+    src="Hendrick_Matthew25_2024.jpg"
+    width="317px"
+    height="480px"
+    alt="Matthew-Hendrick-Head-Shot"
+  />
+
+  <img
+    src="DiFilippo_Luka25_2024_1.jpg"
+    width="317px"
+    height="480px"
+    alt="Luka-DiFilippo-Head-Shot"
+  />
+
+  <img src="Decker_Sam25_2024.jpg" 
+  width="317px" 
+  height="480px" 
+  alt="Sam-Decker-Head-Shot" />
+</div>
+
+<div class="text">
   <h3>Matthew Hendrick</h3>
   <p>Hes a really good guy that I trust</p>
 
-  <img src="MatthewH-Headshot.jpg" width="480px" height="600px" alt="MHH" />
-</div>
-
-<div class="luka">
   <h3>Luka DiFilippo</h3>
   <p>Hes not a really good guy that I trust</p>
 
-  <img src="Luka_Headshot.jpg" width="480px" height="601px" alt="LDH" />
-</div>
-
-<div class="sam">
   <h3>Sam Decker</h3>
   <p>Hes kinda a really good guy that I trust</p>
-
-  <img src="Decker_Sam25_2021.jpg" width="480px" height="600px" alt="SDH" />
 </div>
 
 <style>
@@ -44,16 +54,15 @@
     margin: 20px auto;
   }
 
-  .matt {
-    margin: 50px auto;
+  .head_shots {
+    margin: 20px auto;
+    display: block;
+    text-align: center;
   }
 
-  .luka {
-    margin: 50px auto;
-    text-align: right;
-  }
-
-  .sam {
-    margin: 50px auto;
+  .text {
+    margin: 20px auto;
+    display: block;
+    text-align: top;
   }
 </style>

@@ -15,6 +15,10 @@
   <a href="/gamestats">Statistics</a>
 </div>
 
+<div class="JJ">
+  <img src="tuff_aff_fball_flick.jpeg" alt="tuff agg flick" />
+</div>
+
 <!-- test commit-->
 
 <style>
@@ -22,5 +26,10 @@
     text-align: center;
     display: block;
     margin: 20px auto;
+  }
+
+  .JJ {
+    display: inline;
+    text-align: center;
   }
 </style>
