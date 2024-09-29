@@ -1,8 +1,6 @@
 <script>
 </script>
 
-<!-- PUT RESUMES ON THE OPPOSITE SIDE OF THE PAGE TO THE RESPECTED PICTURE -->
-
 <div class="about">
   <h1>About Us</h1>
 
@@ -12,39 +10,47 @@
     'BetBigOrSML' comes from our names combined into one acronym that sounds
     like the word small. We hope you enjoy and any feedback is welcome!
   </p>
-  <a href="/">Home</a>
 </div>
 
-<div class="head_shots">
-  <img
-    src="Hendrick_Matthew25_2024.jpg"
-    width="317px"
-    height="480px"
-    alt="Matthew-Hendrick-Head-Shot"
-  />
+<div class="profile-container">
+  <div class="profile">
+    <img
+      src="Hendrick_Matthew25_2024.jpg"
+      width="317px"
+      height="480px"
+      alt="Matthew-Hendrick-Head-Shot"
+    />
+    <div class="bio">
+      <a href="/about/resumes/matthew-hendrick">Matthew Hendrick</a>
+      <p>He's a really good guy that I trust.</p>
+    </div>
+  </div>
 
-  <img
-    src="DiFilippo_Luka25_2024_1.jpg"
-    width="317px"
-    height="480px"
-    alt="Luka-DiFilippo-Head-Shot"
-  />
+  <div class="profile">
+    <img
+      src="DiFilippo_Luka25_2024_1.jpg"
+      width="317px"
+      height="480px"
+      alt="Luka-DiFilippo-Head-Shot"
+    />
+    <div class="bio">
+      <h3>Luka DiFilippo</h3>
+      <p>He's not a really good guy that I trust.</p>
+    </div>
+  </div>
 
-  <img src="Decker_Sam25_2024.jpg" 
-  width="317px" 
-  height="480px" 
-  alt="Sam-Decker-Head-Shot" />
-</div>
-
-<div class="text">
-  <h3>Matthew Hendrick</h3>
-  <p>Hes a really good guy that I trust</p>
-
-  <h3>Luka DiFilippo</h3>
-  <p>Hes not a really good guy that I trust</p>
-
-  <h3>Sam Decker</h3>
-  <p>Hes kinda a really good guy that I trust</p>
+  <div class="profile">
+    <img
+      src="Decker_Sam25_2024.jpg"
+      width="317px"
+      height="480px"
+      alt="Sam-Decker-Head-Shot"
+    />
+    <div class="bio">
+      <h3>Sam Decker</h3>
+      <p>Hella frat.</p>
+    </div>
+  </div>
 </div>
 
 <style>
@@ -54,15 +60,23 @@
     margin: 20px auto;
   }
 
-  .head_shots {
-    margin: 20px auto;
-    display: block;
-    text-align: center;
+  .profile-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 10px auto;
   }
 
-  .text {
-    margin: 20px auto;
-    display: block;
-    text-align: top;
+  .profile {
+    text-align: center;
+    margin: 10px;
+  }
+
+  .profile img {
+    border-radius: 15px;
+    object-fit: cover;
+  }
+
+  .bio {
+    margin-top: 10px;
   }
 </style>

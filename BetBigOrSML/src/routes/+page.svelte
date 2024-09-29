@@ -4,22 +4,20 @@
 <div class="index">
   <h1>Welcome</h1>
   <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-    non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    Hello everyone! Welcome to our website. Here you can look at many different
+    NFL parlays, and use our software to check and see if any arbitrary bet has
+    a good or bad chance of hitting. Happy betting!
   </p>
-  <a href="/about">About Us</a> |
-  <a href="/gamestats">Statistics</a>
 </div>
 
-<div class="JJ">
-  <img src="tuff_aff_fball_flick.jpeg" alt="tuff agg flick" />
+<div class="football">
+  <img
+    src="tuff_aff_fball_flick.jpeg"
+    width="1080px"
+    height="540px"
+    alt="tuff ahh flick"
+  />
 </div>
-
-<!-- test commit-->
 
 <style>
   .index {
@@ -28,8 +26,13 @@
     margin: 20px auto;
   }
 
-  .JJ {
-    display: inline;
-    text-align: center;
+  .football {
+    display: flex;
+    margin: 20px auto;
+  }
+
+  .football img {
+    border-radius: 15px;
+    object-fit: cover;
   }
 </style>
