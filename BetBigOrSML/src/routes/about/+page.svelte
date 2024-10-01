@@ -21,7 +21,9 @@
       alt="Matthew-Hendrick-Head-Shot"
     />
     <div class="bio">
-      <a href="/about/resumes/matthew-hendrick">Matthew Hendrick</a>
+      <a data-sveltekit-reload href="www.linkedin.com/in/matthew-hendrick22"
+        >Matthew Hendrick</a
+      >
       <p>He's a really good guy that I trust.</p>
     </div>
   </div>

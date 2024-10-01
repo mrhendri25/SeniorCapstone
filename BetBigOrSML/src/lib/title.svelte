@@ -8,12 +8,12 @@
 </div>
 
 <div class="page_bar">
-  <a href="/">Home</a> /~/
-  <a href="/about">About Us</a> /~/
-  <a href="/gamestats">Statistics</a> /~/
-  <a href="/news">News</a> /~/
-  <a href="/parlay">Parlays</a> /~/
-  <a href="/players">Players</a>
+  <a href="/">Home</a>___
+  <a href="/about">About Us</a>___
+  <a href="/gamestats">Statistics</a>___
+  <a href="/news">News</a>___
+  <a href="/parlay">Parlays</a>___
+  <a href="/players">Players</a>___
 </div>
 
 <style>
@@ -30,6 +30,5 @@
     top: 0;
     right: 0;
     padding: 20px;
-    background-color: rgb(200, 21, 21);
   }
 </style>

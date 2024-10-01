@@ -1,9 +1,14 @@
 body {
-    background: #7f7f7f;
-    margin: 0;
+    /*background: #7f7f7f;
+    margin: 0;*/
+    background-image: url('dark-background.png');
+    background-size: cover; /* Adjust the size */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent repetition */
+    min-height: 100vh; /* Ensure it covers the full viewport height */
 }
 h1,h2,h3,h4,a,p,li {
-    color: rgb(33, 26, 26);
+    color: rgb(208, 172, 172);
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-weight: normal;
 }
