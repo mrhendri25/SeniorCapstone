@@ -1,4 +1,6 @@
 <script lang="ts">
+  let pageTitle = "Statistics - BetBigOrSML";
+
   let upcomingGames = [];
 
   async function fetchUpcomingGames() {
@@ -25,6 +27,10 @@
     /* empty for now, to be used for future charts */
   ];
 </script>
+
+<svelte:head>
+  <title>{pageTitle}</title>
+</svelte:head>
 
 <h1>NFL Betting Platform</h1>
 

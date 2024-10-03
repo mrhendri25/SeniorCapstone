@@ -27,5 +27,6 @@
   }
   footer {
     text-align: center;
+    font-size: small;
   }
 </style>

@@ -1,5 +1,10 @@
 <script>
+  let pageTitle = "About - BetBigOrSML";
 </script>
+
+<svelte:head>
+  <title>{pageTitle}</title>
+</svelte:head>
 
 <div class="about">
   <h1>About Us</h1>
@@ -21,10 +26,17 @@
       alt="Matthew-Hendrick-Head-Shot"
     />
     <div class="bio">
-      <a data-sveltekit-reload href="www.linkedin.com/in/matthew-hendrick22"
-        >Matthew Hendrick</a
+      <a
+        data-sveltekit-reload
+        href="https://www.linkedin.com/in/matthew-hendrick22"
+        target="_blank">Matthew Hendrick</a
       >
-      <p>He's a really good guy that I trust.</p>
+      <p>
+        Hello! My name is Matthew Hendrick and I am a senior at Wabash College
+        majoring in computer science. Some of my interests include front-end
+        development, cybersecurity, and algorithms. I hope you enjoy the
+        website!
+      </p>
     </div>
   </div>
 
@@ -36,8 +48,12 @@
       alt="Luka-DiFilippo-Head-Shot"
     />
     <div class="bio">
-      <h3>Luka DiFilippo</h3>
-      <p>He's not a really good guy that I trust.</p>
+      <a
+        data-sveltekit-reload
+        href="https://www.linkedin.com/in/lukadifilippo/"
+        target="_blank">Luka DiFilippo</a
+      >
+      <p>Bio here</p>
     </div>
   </div>
 
@@ -49,8 +65,12 @@
       alt="Sam-Decker-Head-Shot"
     />
     <div class="bio">
-      <h3>Sam Decker</h3>
-      <p>Hella frat.</p>
+      <a
+        data-sveltekit-reload
+        href="https://www.linkedin.com/in/samueldecker/"
+        target="_blank">Sam Decker</a
+      >
+      <p>Bio here</p>
     </div>
   </div>
 </div>
@@ -60,6 +80,7 @@
     text-align: center;
     display: block;
     margin: 20px auto;
+    font-size: large;
   }
 
   .profile-container {

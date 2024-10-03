@@ -1,5 +1,10 @@
 <script>
+  let pageTitle = "Home - BetBigOrSML";
 </script>
+
+<svelte:head>
+  <title>{pageTitle}</title>
+</svelte:head>
 
 <div class="index">
   <h1>Welcome</h1>
@@ -23,7 +28,7 @@
   .index {
     text-align: center;
     display: block;
-    margin: 20px auto;
+    font-size: larger;
   }
 
   .football {
