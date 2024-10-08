@@ -21,4 +21,14 @@ epa = pd.merge(pass_epa, rush_epa, on=['posteam','posteam_type'])
 sr = pd.merge(pass_sr, rush_sr, on=['posteam','posteam_type'])
 epa_sr = pd.merge(epa, sr, on=['posteam','posteam_type'])
 combined_stats = pd.merge(epa_sr, explosive_rate, on=['posteam','posteam_type'])
-print(combined_stats)
+combined_stats = combined_stats.groupby('posteam_type')
+for name, group in combined_stats:
+    posteam_list = list(group['posteam_type'])
+    if posteam_list[0] == 'away':
+        away_df = group.reset_index()
+        away_df = away_df.drop(columns=['index'], axis=1)
+    else:
+        home_df = group.reset_index()
+        home_df = home_df.drop(columns=['index'], axis=1)
+print(home_df)
+print(away_df)
