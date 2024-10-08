@@ -32,7 +32,7 @@
   bettingArticles = [
     {
       title: "Best Bets for Week 1",
-      description: "Here are the top picks for this week’s NFL games.",
+      description: "Here are the top picks for this week's NFL games.",
     },
     {
       title: "Parlay Strategies",
