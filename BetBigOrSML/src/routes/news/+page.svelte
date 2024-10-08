@@ -1,4 +1,6 @@
 <script>
+  let pageTitle = "News - BetBigOrSML";
+
   // Placeholder variables for articles data
   let teamArticles = [];
   let playerArticles = [];
@@ -30,7 +32,7 @@
   bettingArticles = [
     {
       title: "Best Bets for Week 1",
-      description: "Here are the top picks for this week’s NFL games.",
+      description: "Here are the top picks for this week's NFL games.",
     },
     {
       title: "Parlay Strategies",
@@ -38,6 +40,10 @@
     },
   ];
 </script>
+
+<svelte:head>
+  <title>{pageTitle}</title>
+</svelte:head>
 
 <main>
   <h1>NFL News</h1>

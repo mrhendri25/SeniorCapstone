@@ -1,4 +1,5 @@
 <script>
+  let pageTitle = "Parlays - BetBigOrSML";
   let selectedGames = [];
   let customBets = [];
   let smartParlay = null;
@@ -18,6 +19,10 @@
     };
   }
 </script>
+
+<svelte:head>
+  <title>{pageTitle}</title>
+</svelte:head>
 
 <section>
   <h1>Parlay Generator</h1>

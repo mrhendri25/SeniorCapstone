@@ -9,6 +9,10 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.2.4",
+		"@sveltejs/adapter-cloudflare": "^4.7.2",
+		"@sveltejs/adapter-netlify": "^4.3.4",
+		"@sveltejs/adapter-node": "^5.2.5",
+		"@sveltejs/adapter-static": "^3.0.5",
 		"@sveltejs/kit": "^2.5.26",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@tsconfig/svelte": "^5.0.4",
