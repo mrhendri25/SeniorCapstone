@@ -1,7 +1,6 @@
 <script>
   import Title from "$lib/title.svelte";
   import "../styles/global.css";
-  export const prerender = true;
 </script>
 
 <header>
