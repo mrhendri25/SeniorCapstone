@@ -104,15 +104,7 @@
     margin-bottom: 1rem;
   }
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    text-decoration: none;
-  }
-
-  a:hover {
-    text-decoration: underline;
-  }
+  
 
   p {
     margin: 0.5rem 0;
