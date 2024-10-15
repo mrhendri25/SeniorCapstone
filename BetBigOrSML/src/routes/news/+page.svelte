@@ -54,7 +54,6 @@
     <ul>
       {#each teamArticles as article}
         <li>
-          <a href="#">{article.title}</a>
           <p>{article.description}</p>
         </li>
       {/each}
@@ -67,7 +66,6 @@
     <ul>
       {#each playerArticles as article}
         <li>
-          <a href="#">{article.title}</a>
           <p>{article.description}</p>
         </li>
       {/each}
@@ -80,7 +78,6 @@
     <ul>
       {#each bettingArticles as article}
         <li>
-          <a href="#">{article.title}</a>
           <p>{article.description}</p>
         </li>
       {/each}
