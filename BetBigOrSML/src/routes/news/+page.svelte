@@ -54,7 +54,6 @@
     <ul>
       {#each teamArticles as article}
         <li>
-          <a href="#">{article.title}</a>
           <p>{article.description}</p>
         </li>
       {/each}
@@ -67,7 +66,6 @@
     <ul>
       {#each playerArticles as article}
         <li>
-          <a href="#">{article.title}</a>
           <p>{article.description}</p>
         </li>
       {/each}
@@ -80,7 +78,6 @@
     <ul>
       {#each bettingArticles as article}
         <li>
-          <a href="#">{article.title}</a>
           <p>{article.description}</p>
         </li>
       {/each}
@@ -107,15 +104,7 @@
     margin-bottom: 1rem;
   }
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    text-decoration: none;
-  }
-
-  a:hover {
-    text-decoration: underline;
-  }
+  
 
   p {
     margin: 0.5rem 0;
