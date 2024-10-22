@@ -48,9 +48,9 @@
             <div>{game}</div>
             <button
               on:click={() =>
-                customBets.push({ game, type: "moneyline", odds: "+150" })}
+                customBets.push({ game, type: "money line", odds: "+150" })}
             >
-              Add Moneyline Bet
+              Add Money line Bet
             </button>
             <button
               on:click={() =>
