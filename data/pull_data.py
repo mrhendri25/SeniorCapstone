@@ -1,6 +1,7 @@
 import pandas as pd
 import nfl_data_py as nfl
 
+
 nfl_pbp = nfl.import_pbp_data([2023])
 pbp_rp = nfl_pbp[(nfl_pbp['pass'] == 1) | (nfl_pbp['rush'] == 1)]
 pbp_rp = pbp_rp.dropna(subset = ['epa', 'posteam', 'defteam'])

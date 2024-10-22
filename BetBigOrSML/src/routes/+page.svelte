@@ -8,6 +8,7 @@
     "https://media-cldnry.s-nbcnews.com/image/upload/t_fit-560w,f_avif,q_auto:eco,dpr_2/rockcms/2024-04/patrick-mahomes-zz-240416-c0b6da.jpg",
     "https://media.cnn.com/api/v1/images/stellar/prod/gettyimages-1968034361.jpg?c=16x9&q=h_833,w_1480,c_fill",
     "https://www.news10.com/wp-content/uploads/sites/64/2024/09/AP24268023437936.jpg?w=1280",
+    "https://statico.profootballnetwork.com/wp-content/uploads/2024/10/16140254/anthony-richardson-injury-update-week-7-2024-1920x1280.jpg",
   ];
 
   let index = 0;
@@ -48,6 +49,7 @@
     display: block;
     margin: 0 auto;
     border-radius: 15px;
+    max-height: 100%;
     max-width: 100%;
   }
 
