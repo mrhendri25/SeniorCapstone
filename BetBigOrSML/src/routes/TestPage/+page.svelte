@@ -1,64 +1,55 @@
-<script context="module">
-    export async function load({ fetch }) {
-        const playerName = 'Patrick Mahomes'; // Replace with a valid player name
-        const response = await fetch(`/api/search-player?name=${playerName}`);
-
-        if (!response.ok) {
-            console.error(`Error fetching player data: ${response.status} ${response.statusText}`);
-            return {
-                status: response.status,
-                error: new Error('Failed to fetch player data')
-            };
-        }
-
-        const playerData = await response.json();
-
-        // Log playerData to check if it's being fetched correctly
-        console.log('Fetched Player Data:', playerData);
-
-        return { props: { playerData } };
-    }
-</script>
-
 <script>
-    export let playerData;
+    // Example of made-up upcoming matchups data
+    let matchups = [
+        { week: 1, games: ['Team A vs Team B', 'Team C vs Team D'] },
+        { week: 2, games: ['Team E vs Team F', 'Team G vs Team H'] },
+        { week: 3, games: ['Team I vs Team J', 'Team K vs Team L'] },
+        // Add more weeks as needed
+    ];
 </script>
 
 <style>
-    .container {
-        padding: 20px;
-        max-width: 600px;
-        margin: 0 auto;
+    .matchup-container {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #2b2b2b;
+        color: white;
+        padding: 10px;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
     }
 
-    .player-data {
-        margin-top: 20px;
-        padding: 20px;
-        background-color: #f9f9f9;
-        border: 1px solid #ddd;
-        border-radius: 4px;
+    .matchup-box {
+        background-color: #3b3b3b;
+        border-radius: 5px;
+        padding: 5px 10px;
+        margin: 5px;
+        min-width: 100px; /* Minimum width for the boxes */
+        text-align: center;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .week {
+        font-weight: bold;
+    }
+
+    .game {
+        font-size: 12px; /* Smaller font size for games */
     }
 </style>
 
-<div class="container">
-    <h1>Player Stats</h1>
-
-    {#if playerData}
-        <div class="player-data">
-            <h2>{playerData.player_display_name} ({playerData.player_name})</h2>
-            <ul>
-                <li><strong>Position:</strong> {playerData.position}</li>
-                <li><strong>Recent Team:</strong> {playerData.recent_team}</li>
-                <li><strong>Completions:</strong> {playerData.completions}</li>
-                <li><strong>Attempts:</strong> {playerData.attempts}</li>
-                <li><strong>Passing Yards:</strong> {playerData.passing_yards}</li>
-                <li><strong>Passing Touchdowns:</strong> {playerData.passing_tds}</li>
-                <li><strong>Interceptions:</strong> {playerData.interceptions}</li>
-                <li><strong>Fantasy Points:</strong> {playerData.fantasy_points}</li>
-                <!-- Add more stats as needed -->
-            </ul>
+<div class="matchup-container">
+    {#each matchups as { week, games }}
+        <div class="matchup-box">
+            <div class="week">Week {week}</div>
+            {#each games as game}
+                <div class="game">{game}</div>
+            {/each}
         </div>
-    {:else}
-        <p>Loading player data...</p>
-    {/if}
+    {/each}
 </div>
