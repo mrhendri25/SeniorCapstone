@@ -11,7 +11,6 @@
   <a href="/">Home</a>___
   <a href="/about">About Us</a>___
   <a href="/gamestats">Statistics</a>___
-  <a href="/news">News</a>___
   <a href="/parlay">Parlays</a>___
   <a href="/players">Players</a>___
 </div>

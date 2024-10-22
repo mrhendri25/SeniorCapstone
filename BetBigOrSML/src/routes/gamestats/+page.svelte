@@ -34,9 +34,9 @@
 
 <h1>NFL Betting Platform</h1>
 
-<!-- Section: Upcoming NFL Matchups -->
+<!-- Section: Upcoming NFL Match ups -->
 <section>
-  <h2>Upcoming NFL Matchups</h2>
+  <h2>Upcoming NFL Match ups</h2>
   <ul>
     {#each upcomingGames as game}
       <li>
