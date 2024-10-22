@@ -70,7 +70,9 @@
         href="https://www.linkedin.com/in/samueldecker/"
         target="_blank">Sam Decker</a
       >
-      <p>Bio here</p>
+      <p>Hi! My name is Sam Decker and I am a current senior at Wabash College
+        majoring in Computer Science and minoring in Classics. I really enjoy sports betting and
+      I hope you do too with our site! </p>
     </div>
   </div>
 </div>
