@@ -244,7 +244,7 @@ app.get('/api/schedule', async (req, res) => {
     try {
         await client.connect();
         const db = client.db('NFLData');
-        const collection = db.collection('2024-25 NFL Schedule');
+        const collection = db.collection('NFL 2024-25 Schedule');
 
         const schedule = await collection.find({}).toArray();
 
@@ -271,6 +271,21 @@ app.get('/api/wlrecord', async (req, res) => {
     }
 });
 
+//team descriptions api
+app.get('/api/teamdesc', async (req, res) => {
+    try {
+        await client.connect();
+        const db = client.db('nfl_database');
+        const collection = db.collection('team_logos');
+
+        const teamdesc = await collection.find({}).toArray();
+
+        res.status(200).json(teamdesc);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to fetch team desc data' });
+    }
+});
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
