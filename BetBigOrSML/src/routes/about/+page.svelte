@@ -53,7 +53,11 @@
         href="https://www.linkedin.com/in/lukadifilippo/"
         target="_blank">Luka DiFilippo</a
       >
-      <p>Bio here</p>
+      <p>
+        Hello! My name is Luka DiFilippo. I am a computer science major and an
+        Asian Studies minor. I plan on going into the quantitative finance field
+        after graduation. I am an NCAA athlete and play lacrosse.
+      </p>
     </div>
   </div>
 
