@@ -1,21 +1,29 @@
 <script>
   let pageTitle = "Home - BetBigOrSML";
 
-  import { fade } from "svelte/transition";
+  import { onMount, onDestroy } from "svelte";
 
-  const carouselPhotos = [
+  let images = [
     "https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1000w,f_auto,q_auto:best/rockcms/2024-01/240129-brock-purdy-al-0810-c942e4.jpg",
     "https://media-cldnry.s-nbcnews.com/image/upload/t_fit-560w,f_avif,q_auto:eco,dpr_2/rockcms/2024-04/patrick-mahomes-zz-240416-c0b6da.jpg",
     "https://media.cnn.com/api/v1/images/stellar/prod/gettyimages-1968034361.jpg?c=16x9&q=h_833,w_1480,c_fill",
     "https://www.news10.com/wp-content/uploads/sites/64/2024/09/AP24268023437936.jpg?w=1280",
     "https://statico.profootballnetwork.com/wp-content/uploads/2024/10/16140254/anthony-richardson-injury-update-week-7-2024-1920x1280.jpg",
   ];
+  let currentIndex = 0;
+  let interval;
 
-  let index = 0;
+  function nextImage() {
+    currentIndex = (currentIndex + 1) % images.length;
+  }
 
-  const next = () => {
-    index = (index + 1) % carouselPhotos.length;
-  };
+  onMount(() => {
+    interval = setInterval(nextImage, 3000);
+  });
+
+  onDestroy(() => {
+    clearInterval(interval);
+  });
 </script>
 
 <svelte:head>
@@ -32,11 +40,10 @@
   </p>
 </div>
 
-{#each [carouselPhotos[index]] as src (index)}
-  <img transition:fade {src} alt="" />
-{/each}
-
-<button on:click={next}>Next!</button>
+<div class="carousel">
+  <!-- svelte-ignore a11y-img-redundant-alt -->
+  <img src={images[currentIndex]} alt="Carousel image" />
+</div>
 
 <style>
   .index {
@@ -46,15 +53,19 @@
   }
 
   img {
-    display: block;
-    margin: 0 auto;
-    border-radius: 15px;
-    max-height: 100%;
     max-width: 100%;
+    max-height: 100%;
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+    border-radius: 15px;
   }
 
-  button {
-    display: block;
-    margin: 20px auto;
+  .carousel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    overflow: hidden;
   }
 </style>
