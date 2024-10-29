@@ -1,5 +1,6 @@
 import pandas as pd
 import nfl_data_py as nfl
+import numpy as np
 
 def data_to_train_model():
     nfl_pbp = nfl.import_pbp_data([2023, 2022, 2021, 2020, 2019, 2018])
@@ -8,7 +9,7 @@ def data_to_train_model():
 
     pbp_rp.loc[pbp_rp['pass'] == 1, 'pass_success'] = (pbp_rp['epa'] > 0)
     pbp_rp.loc[pbp_rp['rush'] == 1, 'rush_success'] = (pbp_rp['epa'] > 0)
-    pbp_rp['pass_success'] = pbp_rp['pass_success'].astype(bool) # To remove warnings
+    pbp_rp['pass_success'] = pbp_rp['pass_success'].astype(bool)
     pbp_rp['rush_success'] = pbp_rp['rush_success'].astype(bool)
 
     pbp_rp['explosive_play'] = ((pbp_rp['pass'] == 1) | (pbp_rp['rush'] == 1)) & (pbp_rp['yards_gained'] > 20)
