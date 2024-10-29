@@ -53,7 +53,11 @@
         href="https://www.linkedin.com/in/lukadifilippo/"
         target="_blank">Luka DiFilippo</a
       >
-      <p>Bio here</p>
+      <p>
+        Hello! My name is Luka DiFilippo. I am a computer science major and an
+        Asian Studies minor. I plan on going into the quantitative finance field
+        after graduation. I am an NCAA athlete and play lacrosse.
+      </p>
     </div>
   </div>
 
@@ -70,9 +74,11 @@
         href="https://www.linkedin.com/in/samueldecker/"
         target="_blank">Sam Decker</a
       >
-      <p>Hi! My name is Sam Decker and I am a current senior at Wabash College
-        majoring in Computer Science and minoring in Classics. I really enjoy sports betting and
-      I hope you do too with our site! </p>
+      <p>
+        Hi! My name is Sam Decker and I am a current senior at Wabash College
+        majoring in Computer Science and minoring in Classics. I really enjoy
+        sports betting and I hope you do too with our site!
+      </p>
     </div>
   </div>
 </div>

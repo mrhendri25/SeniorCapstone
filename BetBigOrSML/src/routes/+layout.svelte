@@ -13,7 +13,7 @@
 </main>
 
 <footer>
-  <p>Copyright of BetBigOrSML 2024</p>
+  <p>Copyright of BetBigOrSML 2024 ©</p>
 </footer>
 
 <style>
@@ -28,5 +28,6 @@
   footer {
     text-align: center;
     font-size: small;
+    position: relative;
   }
 </style>
