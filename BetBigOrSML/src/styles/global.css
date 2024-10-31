@@ -1,14 +1,37 @@
 body {
-    background: #000000;
+    /* background: #000000;
     margin: 0;
     /*background-image: url('dark-background.png');
     background-size: cover; /* Adjust the size */
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Prevent repetition */
-    min-height: 100vh; /* Ensure it covers the full viewport height */
+    /*background-position: center; /* Center the image */
+    /*background-repeat: no-repeat; /* Prevent repetition */
+    /*min-height: 100vh; /* Ensure it covers the full viewport height */ 
+
+    background-image: repeating-linear-gradient(
+        45deg,
+        hsla(312, 0%, 63%, 0.05) 0px,
+        hsla(312, 0%, 63%, 0.05) 10px,
+        transparent 10px,
+        transparent 100px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        hsla(312, 0%, 63%, 0.05) 0px,
+        hsla(312, 0%, 63%, 0.05) 50px,
+        transparent 50px,
+        transparent 100px
+      ),
+      linear-gradient(90deg, hsl(80, 0%, 20%), hsl(80, 0%, 20%));
+      background-size: cover;
 }
-h1,h2,h3,h4,a,p,li {
-    color: rgb(234, 153, 153);
+h2,h3,h4,a,p,li {
+    color: rgb(210, 71, 71);
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight: normal;
+}
+
+h1, h4 {
+    color:rgb(0, 0, 0);
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-weight: normal;
 }

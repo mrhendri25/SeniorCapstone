@@ -12,7 +12,7 @@ return {
 	assets: new Set(["Decker_Sam25_2024.jpg","DiFilippo_Luka25_2024_1.jpg","Hendrick_Matthew25_2024.jpg","dark-background.png","favicon.png","tuff_aff_fball_flick.jpeg","wabashWlogo.png"]),
 	mimeTypes: {".jpg":"image/jpeg",".png":"image/png",".jpeg":"image/jpeg"},
 	_: {
-		client: {"start":"_app/immutable/entry/start.Bc54zAyl.js","app":"_app/immutable/entry/app.CO-bxSy0.js","imports":["_app/immutable/entry/start.Bc54zAyl.js","_app/immutable/chunks/entry.BcwjQ3pl.js","_app/immutable/chunks/scheduler.DWXonaIp.js","_app/immutable/chunks/index.B83hKOeX.js","_app/immutable/chunks/environment.CZLhA_4V.js","_app/immutable/entry/app.CO-bxSy0.js","_app/immutable/chunks/scheduler.DWXonaIp.js","_app/immutable/chunks/index.LEhKhOah.js","_app/immutable/chunks/environment.CZLhA_4V.js"],"stylesheets":[],"fonts":[],"uses_env_dynamic_public":false},
+		client: {"start":"_app/immutable/entry/start.C8wl9ZgS.js","app":"_app/immutable/entry/app.CnA4hbrt.js","imports":["_app/immutable/entry/start.C8wl9ZgS.js","_app/immutable/chunks/entry.DA_z_TEy.js","_app/immutable/chunks/scheduler.CgemthBB.js","_app/immutable/chunks/index.bAkrqk_X.js","_app/immutable/chunks/environment.CZLhA_4V.js","_app/immutable/entry/app.CnA4hbrt.js","_app/immutable/chunks/scheduler.CgemthBB.js","_app/immutable/chunks/index.wvoJiAGR.js","_app/immutable/chunks/environment.CZLhA_4V.js"],"stylesheets":[],"fonts":[],"uses_env_dynamic_public":false},
 		nodes: [
 			__memo(() => import('../server/nodes/0.js')),
 			__memo(() => import('../server/nodes/1.js')),
@@ -33,44 +33,44 @@ return {
 				endpoint: null
 			},
 			{
+				id: "/TestPage",
+				pattern: /^\/TestPage\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 3 },
+				endpoint: null
+			},
+			{
 				id: "/about",
 				pattern: /^\/about\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 3 },
+				page: { layouts: [0,], errors: [1,], leaf: 4 },
 				endpoint: null
 			},
 			{
 				id: "/gamestats",
 				pattern: /^\/gamestats\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 4 },
+				page: { layouts: [0,], errors: [1,], leaf: 5 },
 				endpoint: null
 			},
 			{
 				id: "/news",
 				pattern: /^\/news\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 5 },
+				page: { layouts: [0,], errors: [1,], leaf: 6 },
 				endpoint: null
 			},
 			{
 				id: "/parlay",
 				pattern: /^\/parlay\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 6 },
+				page: { layouts: [0,], errors: [1,], leaf: 7 },
 				endpoint: null
 			},
 			{
 				id: "/players",
 				pattern: /^\/players\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 7 },
-				endpoint: null
-			},
-			{
-				id: "/players/[id]",
-				pattern: /^\/players\/([^/]+?)\/?$/,
-				params: [{"name":"id","optional":false,"rest":false,"chained":false}],
 				page: { layouts: [0,], errors: [1,], leaf: 8 },
 				endpoint: null
 			}

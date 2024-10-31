@@ -8,11 +8,19 @@
 </div>
 
 <div class="page_bar">
-  <a href="/">Home</a>___
-  <a href="/about">About Us</a>___
-  <a href="/gamestats">Statistics</a>___
-  <a href="/parlay">Parlays</a>___
-  <a href="/players">Players</a>___
+  <a href="/">Home</a>
+  <p></p>
+
+  <a href="/about">About Us</a>
+  <p></p>
+
+  <a href="/gamestats">Statistics</a>
+  <p></p>
+
+  <a href="/parlay">Parlays</a>
+  <p></p>
+
+  <a href="/players">Players</a>
 </div>
 
 <style>

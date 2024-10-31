@@ -110,4 +110,8 @@
   .bio {
     margin-top: 10px;
   }
+
+  .stripes {
+    background-size: cover;
+  }
 </style>

@@ -56,7 +56,7 @@
     max-width: 100%;
     max-height: 100%;
     height: 100%;
-    width: auto;
+    width: 80%;
     object-fit: cover;
     border-radius: 15px;
   }
