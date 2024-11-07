@@ -239,7 +239,7 @@ app.get('/api/totalsprediction', async (req, res) => {
     }
 });
 
-//2024-25 shedule api
+//2024-25 schedule api
 app.get('/api/schedule', async (req, res) => {
     try {
         await client.connect();

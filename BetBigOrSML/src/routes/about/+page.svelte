@@ -37,6 +37,28 @@
         development, cybersecurity, and algorithms. I hope you enjoy the
         website!
       </p>
+      <a
+        data-sveltekit-reload
+        href="https://github.com/mrhendri25"
+        target="_blank"
+      >
+        <img src="25231.png" width="30px" height="30px" alt="GH" />
+      </a>
+
+      <a
+        data-sveltekit-reload
+        href="https://x.com/matthendrick22"
+        target="_blank"
+      >
+        <img src="xLogo.png" width="30px" height="30px" alt="X" />
+      </a>
+      <a
+        data-sveltekit-reload
+        href="https://www.linkedin.com/in/matthew-hendrick22/"
+        target="_blank"
+      >
+        <img src="61109.png" width="30px" height="30px" alt="LI" />
+      </a>
     </div>
   </div>
 
@@ -58,6 +80,28 @@
         Asian Studies minor. I plan on going into the quantitative finance field
         after graduation. I am an NCAA athlete and play lacrosse.
       </p>
+      <a
+        data-sveltekit-reload
+        href="https://github.com/lukad11"
+        target="_blank"
+      >
+        <img src="25231.png" width="30px" height="30px" alt="GH" />
+      </a>
+
+      <a
+        data-sveltekit-reload
+        href="https://x.com/POTUS"
+        target="_blank"
+      >
+        <img src="xLogo.png" width="30px" height="30px" alt="X" />
+      </a>
+      <a
+        data-sveltekit-reload
+        href="https://www.linkedin.com/in/lukadifilippo/"
+        target="_blank"
+      >
+        <img src="61109.png" width="30px" height="30px" alt="LI" />
+      </a>
     </div>
   </div>
 
@@ -79,6 +123,28 @@
         majoring in Computer Science and minoring in Classics. I really enjoy
         sports betting and I hope you do too with our site!
       </p>
+      <a
+        data-sveltekit-reload
+        href="https://github.com/sdecker13"
+        target="_blank"
+      >
+        <img src="25231.png" width="30px" height="30px" alt="GH" />
+      </a>
+
+      <a
+        data-sveltekit-reload
+        href="https://x.com/AB84"
+        target="_blank"
+      >
+        <img src="xLogo.png" width="30px" height="30px" alt="X" />
+      </a>
+      <a
+        data-sveltekit-reload
+        href="https://www.linkedin.com/in/samueldecker/"
+        target="_blank"
+      >
+        <img src="61109.png" width="30px" height="30px" alt="LI" />
+      </a>
     </div>
   </div>
 </div>
@@ -109,9 +175,5 @@
 
   .bio {
     margin-top: 10px;
-  }
-
-  .stripes {
-    background-size: cover;
   }
 </style>
