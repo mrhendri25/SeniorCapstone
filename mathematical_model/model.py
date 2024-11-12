@@ -9,8 +9,40 @@ def monte_carlo_simulation(num_simulations):
     regress = points_regression(training_df)
     offense_df, defense_df = prediction_data()
     df_games = get_schedule()
+
     for _ in range(num_simulations):
-        offense_df, defense_df = determine_points(offense_df, defense_df, df_games, regress)
+        offense_df, defense_df = determine_points(offense_df, defense_df, regress)
+        offense_df = offense_df.drop(columns=['pass_epa', 'rush_epa', 'pass_sr', 'rush_sr', 'explosive_rate'])
+        defense_df = defense_df.drop(columns=['pass_epa', 'rush_epa', 'pass_sr', 'rush_sr', 'explosive_rate'])
+        df_merged = pd.merge(df_games, offense_df, left_on='home_team', right_on='team')
+        df_merged = df_merged.rename(columns={'prediction_label': 'home_team_predicted_score'})
+        df_merged = df_merged.drop(columns=['team'])
+
+        df_merged = pd.merge(df_merged, offense_df, left_on='away_team', right_on='team')
+        df_merged = df_merged.rename(columns={'prediction_label': 'away_team_predicted_score'})
+        df_merged = df_merged.drop(columns=['team'])
+
+        df_merged = pd.merge(df_merged, defense_df, left_on='home_team', right_on='team')
+        df_merged = df_merged.rename(columns={'prediction_label': 'home_team_predicted_score_against'})
+        df_merged = df_merged.drop(columns=['team'])
+
+        df_merged = pd.merge(df_merged, defense_df, left_on='away_team', right_on='team')
+        df_merged = df_merged.rename(columns={'prediction_label': 'away_team_predicted_score_against'})
+        df_merged = df_merged.drop(columns=['team'])
+
+        home_team_total = []
+        away_team_total = []
+        for i in range(len(df_merged)):
+            temp_home_team_total = (df_merged['home_team_predicted_score'].iloc[i] + df_merged['away_team_predicted_score_against'].iloc[i]) / 2
+            temp_away_team_total = (df_merged['away_team_predicted_score'].iloc[i] + df_merged['home_team_predicted_score_against'].iloc[i]) / 2
+            home_team_total.append(temp_home_team_total)
+            away_team_total.append(temp_away_team_total)
+
+        df_merged['home_team_total'] = home_team_total
+        df_merged['away_team_total'] = away_team_total
+
+        df_merged.drop(columns=['home_team_predicted_score', 'away_team_predicted_score', 'home_team_predicted_score_against', 'away_team_predicted_score_against'])
+
     return offense_df, defense_df
 
 x, y = monte_carlo_simulation(1)
