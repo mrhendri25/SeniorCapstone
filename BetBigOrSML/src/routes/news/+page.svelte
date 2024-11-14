@@ -104,8 +104,6 @@
     margin-bottom: 1rem;
   }
 
-  
-
   p {
     margin: 0.5rem 0;
   }

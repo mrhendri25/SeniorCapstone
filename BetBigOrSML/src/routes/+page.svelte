@@ -44,6 +44,31 @@
   <!-- svelte-ignore a11y-img-redundant-alt -->
   <img src={images[currentIndex]} alt="Carousel image" />
 </div>
+<div class="news">
+  <a data-sveltekit-reload href="https://nfl.com" target="_blank">
+    <img src="nflpic.png" width="60px" height="82.5px" alt="NFL" />
+  </a>
+
+  <a
+    data-sveltekit-reload
+    href="https://abc.com/collection/abfd43e1-7928-4894-92ed-88c8e8596082"
+    target="_blank"
+  >
+    <img src="abcpic.png" width="82.5px" height="82.5px" alt="ABC" />
+  </a>
+
+  <a data-sveltekit-reload href="https://www.cbssports.com/" target="_blank">
+    <img src="cbspic.png" width="130px" height="82.5px" alt="CBS" />
+  </a>
+
+  <a data-sveltekit-reload href="https://www.foxsports.com/" target="_blank">
+    <img src="foxpic.png" width="100px" height="82.5px" alt="FOX" />
+  </a>
+
+  <a data-sveltekit-reload href="https://www.cnn.com/sport" target="_blank">
+    <img src="cnnpic.png" width="110px" height="72.5px" alt="FOX" />
+  </a>
+</div>
 
 <style>
   .index {
@@ -52,7 +77,7 @@
     font-size: larger;
   }
 
-  img {
+  .carousel img {
     max-width: 100%;
     max-height: 100%;
     height: 100%;
@@ -67,5 +92,14 @@
     align-items: center;
     height: 500px;
     overflow: hidden;
+  }
+
+  .news {
+    justify-content: center;
+    display: flex;
+  }
+
+  .news img {
+    margin: 20px;
   }
 </style>
