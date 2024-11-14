@@ -1,150 +1,204 @@
-<script lang="ts">
+<script>
   import { onMount } from 'svelte';
 
-  // State to store NFL games data, team data, and selected week
-  let games = [];
-  let teams = {};
-  let selectedWeek = 1; // Default to week 1
-  let availableWeeks = []; // Array to store all weeks that have games
+  let week9Games = [];
+  let parlay = [];
+  let betId = Date.now(); // Unique bet ID for each submission (timestamp-based)
+  let userOutputs = []; // Array to hold user output data
 
-  // Fetch NFL games and team data on component mount
   onMount(async () => {
-    try {
-      const scheduleresponse = await fetch('http://localhost:5000/api/schedule');
-      const teamdataresponse = await fetch('http://localhost:5000/api/teamdesc');
-      const data = await scheduleresponse.json(); // Schedule data
-      const teamData = await teamdataresponse.json(); // Team data
-
-      games = data;
-
-      // Create a map of team abbreviations to their logo URLs
-      teams = teamData.reduce((acc, team) => {
-        acc[team.team_abbr] = team.team_logo_wikipedia;
-        return acc;
-      }, {});
-
-      // Extract available weeks from the games data
-      availableWeeks = Array.from(new Set(games.map(game => game.week))).sort();
-
-      // Find the next upcoming week where result is null (i.e., no winner yet)
-      const nextUpcomingGame = games.find(game => game.result === null);
-      if (nextUpcomingGame) {
-        selectedWeek = nextUpcomingGame.week;
-      }
-
-    } catch (error) {
-      console.error("Failed to fetch NFL schedule:", error);
-    }
+      // Fetch Week 9 games
+      await fetchWeek9Games();
+      // Fetch user output data
+      await fetchUserOutput();
   });
 
-  // Function to filter games based on the selected week
-  function filterGamesByWeek(week) {
-    return games.filter(game => game.week === week);
+  async function fetchWeek9Games() {
+      try {
+          const response = await fetch('http://localhost:4000/api/schedule');
+          if (response.ok) {
+              const data = await response.json();
+              // Change filtering to Week 9 games
+              week9Games = data.filter(game => game.week === 11).map(game => ({
+                  ...game,
+                  selected: null
+              }));
+          } else {
+              console.error('Failed to fetch schedule data');
+          }
+      } catch (error) {
+          console.error('Error fetching data:', error);
+      }
+  }
+
+  async function fetchUserOutput() {
+      try {
+          const response = await fetch('http://localhost:4000/api/useroutput');
+          if (response.ok) {
+              userOutputs = await response.json(); // Store the user output data
+          } else {
+              console.error('Failed to fetch user output data');
+          }
+      } catch (error) {
+          console.error('Error fetching user output:', error);
+      }
+  }
+
+  function toggleParlay(team, moneyline, game, type) {
+      const index = parlay.findIndex(pick => pick.game.game_id === game.game_id);
+
+      if (index === -1) {
+          parlay = [...parlay, { team, moneyline, game }];
+          game.selected = type;
+      } else if (parlay[index].team !== team) {
+          parlay[index] = { team, moneyline, game };
+          game.selected = type;
+      } else {
+          parlay = parlay.filter(pick => pick.game.game_id !== game.game_id);
+          game.selected = null;
+      }
+  }
+
+  async function submitParlay() {
+      const selections = parlay.map(pick => ({
+          team: pick.team,
+          moneyline: pick.moneyline,
+          gameId: pick.game.game_id
+      }));
+
+      const betSlip = {
+          betId,
+          userId: 'exampleUser123', // Use a real user ID in production
+          selections
+      };
+
+      try {
+          const response = await fetch('http://localhost:4000/api/input', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(betSlip)
+          });
+
+          if (response.ok) {
+              const result = await response.json();
+              console.log(result.message);
+              // Reset parlay and betId for the next bet slip
+              parlay = [];
+              week9Games = week9Games.map(game => ({ ...game, selected: null }));
+              betId = Date.now(); // Update betId for the next slip
+          } else {
+              console.error('Failed to submit parlay');
+          }
+      } catch (error) {
+          console.error('Error submitting parlay:', error);
+      }
+  }
+
+  function clearParlay() {
+      parlay = [];
+      week9Games = week9Games.map(game => ({ ...game, selected: null }));
   }
 </script>
 
 <style>
-  .game-card {
-    border: 1px solid #ccc;
-    padding: 0.4em; /* Reduced padding */
-    margin-bottom: 0.4em; /* Reduced margin */
-    border-radius: 5px; /* Reduced border radius */
-    background-color: #f9f9f9;
-    font-size: 0.85em; /* Slightly smaller font size */
+  .selected {
+      background-color: lightgreen;
   }
-  .game-details {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
+  /* CSS Grid styling for games */
+  .game-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 3 columns */
+      gap: 20px; /* Space between items */
+      padding: 20px;
   }
-  .betting-section {
-    display: flex;
-    gap: 0.3em; /* Reduced gap */
-    margin-bottom: 0.4em; /* Reduced margin below the betting section */
+
+  .game-item {
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 8px;
+      background-color: #ffffff;
+      text-align: center;
   }
-  .bet-box {
-    padding: 0.3em; /* Reduced padding */
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #fff;
-    width: 70px; /* Reduced width */
-    text-align: center; /* Center text in bet boxes */
+
+  /* Ensure the buttons inside the games fit the layout */
+  .game-item button {
+      width: 100%;
+      margin: 1px 0;
   }
-  .confidence-level {
-    padding: 0.3em; /* Reduced padding */
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #e7f3fe;
-    width: 70px; /* Reduced width */
-    margin-bottom: 0.3em; /* Reduced space below confidence level box */
-  }
-  .week-selector {
-    margin-bottom: 0.4em; /* Reduced margin */
-    font-size: 0.85em; /* Slightly smaller font size */
-  }
-  .team-logo {
-    width: 35px; /* Adjusted the size */
-    height: auto;
+
+  h1, h2 {
+      text-align: center;
   }
 </style>
 
-<!-- Main page layout -->
-<h1>NFL Games of the Week</h1>
+<h1>Week 9 Matchups with Betting Lines</h1>
 
-<!-- Week selector dropdown -->
-<div class="week-selector">
-  <label for="week">Select Week:</label>
-  <select id="week" bind:value={selectedWeek}>
-    {#each availableWeeks as week}
-      <option value={week}>Week {week}</option>
-    {/each}
-  </select>
-</div>
-
-<!-- Display games of the selected week -->
-{#if games.length === 0}
-  <p>Loading NFL games...</p>
+{#if week9Games.length > 0}
+  <div class="game-grid">
+      {#each week9Games as game}
+          <div class="game-item">
+              <strong>{game.away_team}</strong> vs. <strong>{game.home_team}</strong><br>
+              Date: {game.gameday} | Time: {game.gametime}<br>
+              Location: {game.stadium} ({game.location})<br>
+              <br>
+              <strong>Betting Lines:</strong><br>
+              <button 
+                  on:click={() => toggleParlay(game.away_team, game.away_moneyline, game, 'away')}
+                  class:selected={game.selected === 'away'}>
+                  Away Moneyline: {game.away_moneyline}
+              </button>
+              <button 
+                  on:click={() => toggleParlay(game.home_team, game.home_moneyline, game, 'home')}
+                  class:selected={game.selected === 'home'}>
+                  Home Moneyline: {game.home_moneyline}
+              </button>
+          </div>
+      {/each}
+  </div>
 {:else}
-  {#each filterGamesByWeek(selectedWeek) as game}
-    <div class="game-card">
-      <div class="game-details">
-        <div>
-          <h2>
-            <img src={teams[game.home_team]} alt={game.home_team} class="team-logo" />
-            <span>@ {game.home_team}</span>
-            <span> vs </span>
-            <img src={teams[game.away_team]} alt={game.away_team} class="team-logo" />
-            <span>{game.away_team}</span>
-          </h2>
-          <p>{game.gameday} at {game.gametime}</p>
-        </div>
-        <div class="betting-section">
-          <!-- Moneyline Section -->
-          <div class="bet-box">
-            <label>Moneyline</label>
-            <p>H: {game.home_moneyline}</p>
-            <p>A: {game.away_moneyline}</p>
-          </div>
-          <!-- Total Section -->
-          <div class="bet-box">
-            <label>Total</label>
-            <p>O: {game.total_line}</p>
-            <p>Odds: {game.over_odds} / {game.under_odds}</p>
-          </div>
-          <!-- Spread Section -->
-          <div class="bet-box">
-            <label>Spread</label>
-            <p>H: {game.home_spread_odds}</p>
-            <p>A: {game.away_spread_odds}</p>
-          </div>
-        </div>
-        <!-- Confidence Levels Section -->
-        <div class="betting-section">
-          <div class="confidence-level">ML: 80%</div>
-          <div class="confidence-level">Spread: 75%</div>
-          <div class="confidence-level">Total: 85%</div>
-        </div>
-      </div>
-    </div>
-  {/each}
+  <p>Loading Week 9 games...</p>
+{/if}
+
+<h2>Your Parlay</h2>
+
+{#if parlay.length > 0}
+  <ul>
+      {#each parlay as pick}
+          <li>
+              Game: {pick.game.away_team} vs. {pick.game.home_team}<br>
+              Selected Team: <strong>{pick.team}</strong> | Moneyline: {pick.moneyline}
+          </li>
+      {/each}
+  </ul>
+  <button on:click={clearParlay}>Clear Parlay</button>
+  <button on:click={submitParlay}>Submit Parlay</button>
+{:else}
+  <p>No selections added to your parlay yet.</p>
+{/if}
+
+<h2>User Output Data</h2>
+
+{#if userOutputs.length > 0}
+  <ul>
+      {#each userOutputs as output}
+          <li>
+              Bet ID: {output.betId}<br>
+              User ID: {output.userId}<br>
+              Total Odds:{output.totalOdds}<br>
+              Bet Amount:{output.betAmount}<br>
+              Potential Payout:{output.potentialPayout}
+              Selections: 
+              <ul>
+                  {#each output.selections as selection}
+                      <li>{selection.team} (Moneyline: {selection.moneyline}, Game ID: {selection.gameId})</li>
+                  {/each}
+              </ul>
+          </li>
+      {/each}
+  </ul>
+{:else}
+  <p>No user output data available.</p>
 {/if}

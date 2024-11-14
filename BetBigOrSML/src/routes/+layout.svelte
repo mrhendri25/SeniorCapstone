@@ -13,7 +13,7 @@
 </main>
 
 <footer>
-  <p>Copyright of BetBigOrSML 2024 ©</p>
+  <h4>Copyright of BetBigOrSML 2024 ©</h4>
 </footer>
 
 <style>
