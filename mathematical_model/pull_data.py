@@ -46,6 +46,8 @@ def data_to_train_model():
 def prediction_data():
     nfl_pbp = nfl.import_pbp_data([2024])
 
+    week = max(nfl_pbp['week'])+1
+
     pbp_rp = nfl_pbp[((nfl_pbp['pass'] == 1) | (nfl_pbp['rush'] == 1))].copy()
 
 
@@ -156,7 +158,7 @@ def prediction_data():
         data = [team, predict_pass_epa, predict_rush_epa, predict_pass_sr, predict_rush_sr, predict_explosive]
         predict_df.loc[len(predict_df)] = data
     
-    predict_def_df = pd.DataFrame(columns=['team', 'def_pass_epa', 'def_rush_epa', 'def_pass_sr', 'def_rush_sr', 'def_explosive_rate'])
+    predict_def_df = pd.DataFrame(columns=['team', 'pass_epa', 'rush_epa', 'pass_sr', 'rush_sr', 'explosive_rate'])
     for i in range(len(def_normal_df)):
 
         temp_team = def_normal_df.loc[i]
@@ -191,11 +193,11 @@ def prediction_data():
         data = [team, predict_pass_epa, predict_rush_epa, predict_pass_sr, predict_rush_sr, predict_explosive]
         predict_def_df.loc[len(predict_def_df)] = data
 
-    return predict_df, predict_def_df
+    return predict_df, predict_def_df, week
 
-def get_schedule():
+def get_schedule(week):
     schedules = nfl.import_schedules([2024])
-    schedules = schedules[schedules['week'] == 10]
+    schedules = schedules[schedules['week'] == week]
     df_games = pd.DataFrame({
         'home_team': list(schedules['home_team']),
         'away_team': list(schedules['away_team'])
