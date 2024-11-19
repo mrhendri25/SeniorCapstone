@@ -1,14 +1,26 @@
+import nfl_data_py as nfl
+import pymongo
+from pymongo import MongoClient
 import pandas as pd
 import numpy as np
 from determine_points import determine_points
 from define_regression import points_regression
 from pull_data import data_to_train_model, prediction_data, get_schedule
 
+mongo_uri = "mongodb+srv://sdeck1313:A!!yp3dr02020@statistics.b04y7.mongodb.net/"
+
+client = MongoClient(mongo_uri)
+
+db = client['ModelData']
+schedule_collection = db['Predictions']
+
+
 def monte_carlo_simulation(num_simulations):
     training_df = data_to_train_model()
     regress = points_regression(training_df)
     offense_df, defense_df, week = prediction_data()
     df_games = get_schedule(week)
+    all_simulations_results = []
 
     for _ in range(num_simulations):
         offense_df, defense_df = determine_points(offense_df, defense_df, regress)
@@ -43,10 +55,10 @@ def monte_carlo_simulation(num_simulations):
 
         df_merged = df_merged.drop(columns=['home_team_predicted_score', 'away_team_predicted_score', 'home_team_predicted_score_against', 'away_team_predicted_score_against'])
 
-        teams = list(df_merged['home_team']) + list(df_merged['away_team'])
+        simulation_result = df_merged.to_dict(orient='records')
+        all_simulations_results.extend(simulation_result)
 
-        scores = list(df_merged['home_team_total']) + list(df_merged['away_team_total'])
-
+    schedule_collection.insert_many(all_simulations_results)
 
     return df_merged
 
