@@ -37,7 +37,7 @@ function calculatePotentialPayout(betAmount, totalOdds) {
 // API endpoint to process bets (Parlay Calculation)
 app.post('/process_bet', async (req, res) => {
   const { betId, userId, selections } = req.body;
-  const betAmount = 100;
+  
 
   // Calculate total odds and potential payout
   const totalOdds = calculateParlayOdds(selections);
@@ -69,17 +69,17 @@ app.post('/process_bet', async (req, res) => {
 
 // API endpoint to save user bet input
 app.post('/api/input', async (req, res) => {
-    const { betId, userId, selections } = req.body;
+    const { betId, userId, selections, betPrice } = req.body;
   
     try {
       await client.connect();
       const database = client.db('TEST');
       const collection = database.collection('userinput');
   
-      await collection.insertOne({ betId, userId, selections });
+      await collection.insertOne({ betId, userId, selections, betPrice });
   
       const totalOdds = calculateParlayOdds(selections);
-      const betAmount = 100;
+      const betAmount = betPrice;
       const potentialPayout = calculatePotentialPayout(betAmount, totalOdds);
   
       const outputData = {
@@ -87,7 +87,7 @@ app.post('/api/input', async (req, res) => {
         userId,
         totalOdds,
         potentialPayout,
-        betAmount,
+        betPrice,
         selections,
       };
   
@@ -120,9 +120,6 @@ app.get('/api/useroutput', async (req, res) => {
     }
 });
 
-<<<<<<< HEAD
-// Endpoint to fetch NFL 2024-25 schedule
-=======
 //wrweeklydata api
 app.get('/api/wrweeklydata', async (req, res) => {
     try {
@@ -316,7 +313,6 @@ app.get('/api/totalsprediction', async (req, res) => {
 });
 
 //2024-25 schedule api
->>>>>>> a9a1b90005d22d1342a39c9901f0c4e76b62b455
 app.get('/api/schedule', async (req, res) => {
     try {
         await client.connect();
@@ -354,7 +350,7 @@ app.get('/api/moneyline', getData('BettingData', 'Moneyline'));
 app.get('/api/moneylineprediction', getData('Predictions', 'Moneyline Prediction'));
 app.get('/api/spreadprediction', getData('Predictions', 'Spread Prediction'));
 app.get('/api/totalsprediction', getData('Predictions', 'Totals Prediction'));
-
+app.get('/api/logos',getData('nfl_database', 'team_logos'));
 // Generic data-fetching function
 function getData(databaseName, collectionName) {
     return async (req, res) => {
