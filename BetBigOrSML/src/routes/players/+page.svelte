@@ -247,7 +247,7 @@
   .leading-player {
     flex: 1;
     padding: 1rem;
-    background-color: #f0f0f0;
+    background-color: #171414;
     border-radius: 5px;
     margin: 0 0.5rem;
     text-align: center;
@@ -273,7 +273,7 @@
     align-items: flex-start;
     margin-top: 20px;
     padding: 20px;
-    background-color: #f0f0f0;
+    background-color: #171414;
     border-radius: 5px;
   }
 

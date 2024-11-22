@@ -1,55 +1,89 @@
 <script>
-  import { goto } from '$app/navigation';  // Import the 'goto' function from SvelteKit for navigation
-  import axios from 'axios';
-  
-  let username = '';
-  let password = '';
-  let confirmPassword = '';
-  let errorMessage = '';
-  let successMessage = '';
+  import { goto } from "$app/navigation"; // Import the 'goto' function from SvelteKit for navigation
+  import axios from "axios";
+
+  let username = "";
+  let password = "";
+  let confirmPassword = "";
+  let errorMessage = "";
+  let successMessage = "";
   let isRegistering = false; // Toggle between Register and Login forms
-  
+
   // Handle login
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:4000/login', {
+      const response = await axios.post("http://localhost:4000/login", {
         username,
-        password
+        password,
       });
-      localStorage.setItem('token', response.data.token);  // Store token in localStorage
+      localStorage.setItem("token", response.data.token); // Store token in localStorage
 
-      successMessage = 'Login successful!';
-      errorMessage = '';
-      
+      successMessage = "Login successful!";
+      errorMessage = "";
+
       // Redirect to homepage after successful login
-      goto('/home');  // Redirect to the homepage (or adjust path if needed)
+      goto("/home"); // Redirect to the homepage (or adjust path if needed)
     } catch (error) {
-      errorMessage = 'Invalid username or password';
-      successMessage = '';
+      errorMessage = "Invalid username or password";
+      successMessage = "";
     }
   };
 
   // Handle registration
   const handleRegister = async () => {
     if (password !== confirmPassword) {
-      errorMessage = 'Passwords do not match!';
-      successMessage = '';
+      errorMessage = "Passwords do not match!";
+      successMessage = "";
       return;
     }
     try {
-      await axios.post('http://localhost:4000/register', {
+      await axios.post("http://localhost:4000/register", {
         username,
-        password
+        password,
       });
-      successMessage = 'Registration successful! You can now login.';
-      errorMessage = '';
+      successMessage = "Registration successful! You can now login.";
+      errorMessage = "";
       isRegistering = false; // Switch to login after successful registration
     } catch (error) {
-      errorMessage = 'Error registering user';
-      successMessage = '';
+      errorMessage = "Error registering user";
+      successMessage = "";
     }
   };
 </script>
+
+<div class="form-container">
+  {#if isRegistering}
+    <h2>Register</h2>
+    <input type="text" bind:value={username} placeholder="Username" />
+    <input type="password" bind:value={password} placeholder="Password" />
+    <input
+      type="password"
+      bind:value={confirmPassword}
+      placeholder="Confirm Password"
+    />
+    <button on:click={handleRegister}>Register</button>
+  {:else}
+    <h2>Login</h2>
+    <input type="text" bind:value={username} placeholder="Username" />
+    <input type="password" bind:value={password} placeholder="Password" />
+    <button on:click={handleLogin}>Login</button>
+  {/if}
+
+  {#if errorMessage}
+    <p class="error">{errorMessage}</p>
+  {/if}
+  {#if successMessage}
+    <p class="success">{successMessage}</p>
+  {/if}
+
+  <button on:click={() => (isRegistering = !isRegistering)}>
+    {#if isRegistering}
+      Already have an account? Login
+    {:else}
+      Don't have an account? Register
+    {/if}
+  </button>
+</div>
 
 <style>
   .form-container {
@@ -69,7 +103,7 @@
   button {
     width: 100%;
     padding: 10px;
-    background-color: #4CAF50;
+    background-color: #4caf50;
     color: white;
     border: none;
     border-radius: 4px;
@@ -87,33 +121,3 @@
     font-size: 14px;
   }
 </style>
-
-<div class="form-container">
-  {#if isRegistering}
-    <h2>Register</h2>
-    <input type="text" bind:value={username} placeholder="Username" />
-    <input type="password" bind:value={password} placeholder="Password" />
-    <input type="password" bind:value={confirmPassword} placeholder="Confirm Password" />
-    <button on:click={handleRegister}>Register</button>
-  {:else}
-    <h2>Login</h2>
-    <input type="text" bind:value={username} placeholder="Username" />
-    <input type="password" bind:value={password} placeholder="Password" />
-    <button on:click={handleLogin}>Login</button>
-  {/if}
-
-  {#if errorMessage}
-    <p class="error">{errorMessage}</p>
-  {/if}
-  {#if successMessage}
-    <p class="success">{successMessage}</p>
-  {/if}
-
-  <button on:click={() => isRegistering = !isRegistering}>
-    {#if isRegistering}
-      Already have an account? Login
-    {:else}
-      Don't have an account? Register
-    {/if}
-  </button>
-</div>

@@ -1,12 +1,4 @@
 body {
-    /* background: #000000;
-    margin: 0;
-    /*background-image: url('dark-background.png');
-    background-size: cover; /* Adjust the size */
-    /*background-position: center; /* Center the image */
-    /*background-repeat: no-repeat; /* Prevent repetition */
-    /*min-height: 100vh; /* Ensure it covers the full viewport height */ 
-
     background-image: repeating-linear-gradient(
         45deg,
         hsla(312, 0%, 63%, 0.05) 0px,
@@ -24,10 +16,16 @@ body {
       linear-gradient(90deg, hsl(80, 0%, 20%), hsl(80, 0%, 20%));
       background-size: cover;
 }
-h2,h3,h4,a,p,li {
-    color: rgb(236, 98, 98);
+p {
+    color: rgb(255, 255, 255);
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-weight: normal;
+}
+
+h2,h3,h4,a,li {
+  color: rgb(246, 94, 94);
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-weight: normal;
 }
 
 h1, h4 {
