@@ -21,6 +21,8 @@ def monte_carlo_simulation(num_simulations):
     offense_df, defense_df, week = prediction_data()
     df_games = get_schedule(week)
     all_simulations_results = []
+    home_team_wins = []
+    home_team_differential = []
 
     for _ in range(num_simulations):
         offense_df, defense_df = determine_points(offense_df, defense_df, regress)
@@ -55,8 +57,25 @@ def monte_carlo_simulation(num_simulations):
 
         df_merged = df_merged.drop(columns=['home_team_predicted_score', 'away_team_predicted_score', 'home_team_predicted_score_against', 'away_team_predicted_score_against'])
 
+        temp_home_team_win = []
+        for i in range(df_merged):
+            if home_team_total[i] > away_team_total[i]:
+                temp_home_team_win.append(1)
+            else:
+                temp_home_team_win.append(0)
+        if home_team_wins == []:
+            home_team_wins = temp_home_team_win
+        else:
+            np.add(home_team_wins, temp_home_team_win)
+
+        temp_home_team_differential = np.array(home_team_total) - np.array(away_team_total)
+        
+
         simulation_result = df_merged.to_dict(orient='records')
-        all_simulations_results.extend(simulation_result)
+    
+    home_team_win_percentage = [w / num_simulations for w in home_team_wins]
+    
+    all_simulations_results.extend(simulation_result)
 
     schedule_collection.insert_many(all_simulations_results)
 
