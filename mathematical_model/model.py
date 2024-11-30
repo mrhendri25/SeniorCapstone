@@ -66,14 +66,19 @@ def monte_carlo_simulation(num_simulations):
         if home_team_wins == []:
             home_team_wins = temp_home_team_win
         else:
-            np.add(home_team_wins, temp_home_team_win)
+            home_team_wins = np.add(home_team_wins, temp_home_team_win)
 
         temp_home_team_differential = np.array(home_team_total) - np.array(away_team_total)
+        if home_team_differential == []:
+            home_team_differential = temp_home_team_differential
+        else:
+            home_team_differential = np.add(home_team_differential, temp_home_team_differential)
         
 
         simulation_result = df_merged.to_dict(orient='records')
     
     home_team_win_percentage = [w / num_simulations for w in home_team_wins]
+    home_team_differential_average = [d / num_simulations for d in home_team_differential]
     
     all_simulations_results.extend(simulation_result)
 
