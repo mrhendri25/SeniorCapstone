@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 from determine_points import determine_points
 from define_regression import points_regression
-from pull_data import data_to_train_model, prediction_data, get_schedule
+from pull_data import data_to_train_model, prediction_data, predict_this_year, get_schedule
 
 mongo_uri = "mongodb+srv://sdeck1313:A!!yp3dr02020@statistics.b04y7.mongodb.net/"
 
@@ -18,13 +18,14 @@ schedule_collection = db['Predictions']
 def monte_carlo_simulation(num_simulations):
     training_df = data_to_train_model()
     regress = points_regression(training_df)
-    offense_df, defense_df, week = prediction_data()
+    nfl_pbp, week = prediction_data()
     df_games = get_schedule(week)
     all_simulations_results = []
     home_team_wins = []
     home_team_differential = []
 
     for _ in range(num_simulations):
+        offense_df, defense_df = predict_this_year(nfl_pbp)
         offense_df, defense_df = determine_points(offense_df, defense_df, regress)
         offense_df = offense_df.drop(columns=['pass_epa', 'rush_epa', 'pass_sr', 'rush_sr', 'explosive_rate'])
         defense_df = defense_df.drop(columns=['pass_epa', 'rush_epa', 'pass_sr', 'rush_sr', 'explosive_rate'])
@@ -58,7 +59,7 @@ def monte_carlo_simulation(num_simulations):
         df_merged = df_merged.drop(columns=['home_team_predicted_score', 'away_team_predicted_score', 'home_team_predicted_score_against', 'away_team_predicted_score_against'])
 
         temp_home_team_win = []
-        for i in range(df_merged):
+        for i in range(len(df_merged)):
             if home_team_total[i] > away_team_total[i]:
                 temp_home_team_win.append(1)
             else:
@@ -74,17 +75,34 @@ def monte_carlo_simulation(num_simulations):
         else:
             home_team_differential = np.add(home_team_differential, temp_home_team_differential)
         
-
-        simulation_result = df_merged.to_dict(orient='records')
     
     home_team_win_percentage = [w / num_simulations for w in home_team_wins]
     home_team_differential_average = [d / num_simulations for d in home_team_differential]
-    
+
+    winner = []
+    home_team = list(df_merged['home_team'])
+    away_team = list(df_merged['away_team'])
+    for i in range(len(df_merged)):
+        if home_team_win_percentage[i] > 0.5:
+            winner.append(home_team[i])
+        else:
+            home_team_win_percentage[i] = 1 - home_team_win_percentage[i]
+            winner.append(away_team[i])
+        
+    avg_point_differential = home_team_differential_average.abs()
+
+    final_df = pd.DataFrame(
+        data=[home_team, away_team, winner, home_team_win_percentage, avg_point_differential], 
+        columns=['home_team', 'away_team', 'winner', 'win_pct', 'avg_pt_diff']
+        )
+        
+    simulation_result = final_df.to_dict(orient='records')
+
     all_simulations_results.extend(simulation_result)
 
     schedule_collection.insert_many(all_simulations_results)
 
-    return df_merged
+    return final_df
 
-x = monte_carlo_simulation(1)
+x = monte_carlo_simulation(1000)
 print(x)

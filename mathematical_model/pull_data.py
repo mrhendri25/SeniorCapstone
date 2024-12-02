@@ -48,6 +48,9 @@ def prediction_data():
 
     week = max(nfl_pbp['week'])+1
 
+    return nfl_pbp, week
+
+def predict_this_year(nfl_pbp):
     pbp_rp = nfl_pbp[((nfl_pbp['pass'] == 1) | (nfl_pbp['rush'] == 1))].copy()
 
 
@@ -193,7 +196,7 @@ def prediction_data():
         data = [team, predict_pass_epa, predict_rush_epa, predict_pass_sr, predict_rush_sr, predict_explosive]
         predict_def_df.loc[len(predict_def_df)] = data
 
-    return predict_df, predict_def_df, week
+    return predict_df, predict_def_df
 
 def get_schedule(week):
     schedules = nfl.import_schedules([2024])
