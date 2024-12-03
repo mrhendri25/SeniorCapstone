@@ -19,11 +19,11 @@ const accountsDB = mongoose.createConnection(mongoURI, { useNewUrlParser: true, 
 const uri = 'mongodb+srv://sdeck1313:A!!yp3dr02020@statistics.b04y7.mongodb.net/';
 const client = new MongoClient(uri);
 
-// Define User schema and model in the "Accounts" database
+// Define User schema and model in the Accounts database
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true }
-}, { collection: 'User Data' });  // Explicitly set collection name as 'User Data'
+}, { collection: 'User Data' });
 const User = accountsDB.model('User', userSchema);
 
 // Middleware setup
@@ -72,6 +72,23 @@ app.post('/login', async (req, res) => {
   }
 });
 
+// Middleware to verify token
+const verifyToken = (req, res, next) => {
+  const token = req.headers['authorization'];
+  if (!token) return res.status(403).send('Token is required');
+
+  jwt.verify(token, secretKey, (err, decoded) => {
+    if (err) return res.status(401).send('Invalid token');
+    req.user = decoded;
+    next();
+  });
+};
+
+// Logout endpoint
+app.post('/logout', verifyToken, (req, res) => {
+  res.status(200).send('Logout successful');
+});
+
 // API for NFL Data (Parlays, Schedule, Betting Data, etc.)
 app.get('/', (req, res) => {
   res.send('Welcome to the NFL Data API');
@@ -80,6 +97,15 @@ app.get('/', (req, res) => {
 function moneylineToDecimal(moneyline) {
   return moneyline > 0 ? (moneyline / 100) + 1 : (100 / Math.abs(moneyline)) + 1;
 }
+
+function spreadToDecimal(spread) {
+  return spread > 0 ? (spread / 100) + 1 : (100 / Math.abs(spread)) + 1;
+}
+
+function totalToDecimal(total) {
+  return total > 0 ? (total / 100) + 1 : (100 / Math.abs(total)) + 1;
+}
+
 
 function calculateParlayOdds(selections) {
   return selections.reduce((totalOdds, selection) => {
@@ -148,7 +174,18 @@ app.get('/api/useroutput', async (req, res) => {
     await client.connect();
     const db = client.db('TEST');
     const collection = db.collection('useroutput');
-    const userOutputs = await collection.find({}).toArray();
+
+    // Extract the username from the query parameters
+    const { username } = req.query;
+
+    // Validate that the username is provided
+    if (!username) {
+      return res.status(400).json({ error: 'Username query parameter is required' });
+    }
+
+    // Fetch bets for the specific user
+    const userOutputs = await collection.find({ userId: username }).toArray();
+
     res.status(200).json(userOutputs);
   } catch (error) {
     console.error('Error fetching user output data:', error);

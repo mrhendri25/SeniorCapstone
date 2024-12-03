@@ -1,102 +1,115 @@
 <script>
-    // Sample data for recent bets (replace this with actual API call)
-    let recentBets = [
-      {
-        picks: ["Team A vs Team B: Team A", "Team C vs Team D: Team D"],
-        odds: "+350",
-        potentialPayout: "$500",
-        result: "Win"
-      },
-      {
-        picks: ["Team E vs Team F: Team F", "Team G vs Team H: Team G"],
-        odds: "+200",
-        potentialPayout: "$300",
-        result: "Loss"
-      },
-      {
-        picks: ["Team I vs Team J: Team J"],
-        odds: "+150",
-        potentialPayout: "$150",
-        result: "Win"
+  import { goto } from '$app/navigation';
+  import { onMount } from 'svelte';
+
+  let userBets = [];
+  let isLoggedIn = false;
+  let username = '';
+
+  // Check login status and retrieve username
+  const checkLoginStatus = () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      isLoggedIn = true;
+      const decodedToken = JSON.parse(atob(token.split('.')[1]));
+      username = decodedToken.username;
+    } else {
+      isLoggedIn = false;
+      goto('/'); // Redirect to login or home page
+    }
+  };
+
+  // Fetch bets for the logged-in user
+  const fetchUserBets = async () => {
+    try {
+      const response = await fetch(`http://localhost:4000/api/useroutput?username=${username}`);
+      if (response.ok) {
+        userBets = await response.json();
+      } else {
+        console.error('Failed to fetch user bet data');
       }
-    ];
-  </script>
-  
-  <style>
-    .bet-table {
-      width: 100%;
-      max-width: 800px;
-      margin: 0 auto;
-      border-collapse: collapse;
-      font-family: Arial, sans-serif;
-      font-size: 14px;
+    } catch (error) {
+      console.error('Error fetching user bet data:', error);
     }
-  
-    .bet-table th, .bet-table td {
-      border: 1px solid #ccc;
-      text-align: left;
-      padding: 8px;
+  };
+
+  // Initialize on component mount
+  onMount(() => {
+    checkLoginStatus();
+    if (isLoggedIn) {
+      fetchUserBets(); // Fetch bets for the logged-in user
     }
-  
-    .bet-table th {
-      background-color: #f2f2f2;
-      font-weight: bold;
-    }
-  
-    .bet-table .result {
-      font-weight: bold;
-      color: white;
-      text-align: center;
-      padding: 4px 8px;
-      border-radius: 4px;
-    }
-  
-    .bet-table .result.win {
-      background-color: green;
-    }
-  
-    .bet-table .result.loss {
-      background-color: red;
-    }
-  
-    .bet-table ul {
-      margin: 0;
-      padding-left: 20px;
-      list-style: disc;
-    }
-  </style>
-  
-  <div>
-    <h1 style="text-align: center;">Recent Bets</h1>
+  });
+</script>
+
+<svelte:head>
+  <title>Recent Bets - BetBigOrSML</title>
+</svelte:head>
+
+<div>
+  {#if isLoggedIn}
+    <h1 style="text-align: center;">Recent Bets For {username}</h1>
     <table class="bet-table">
       <thead>
         <tr>
           <th>#</th>
           <th>Picks</th>
-          <th>Odds</th>
+          <th>Wager Amount</th>
+          <th>Total Odds</th>
           <th>Potential Payout</th>
-          <th>Result</th>
         </tr>
       </thead>
       <tbody>
-        {#each recentBets as bet, index}
+        {#each userBets as bet, index}
           <tr>
             <td>{index + 1}</td>
             <td>
               <ul>
-                {#each bet.picks as pick}
-                  <li>{pick}</li>
+                {#each bet.selections as selection}
+                  <li>
+                    {selection.team} (Moneyline: {selection.moneyline}) - Game ID: {selection.gameId}
+                    {selection.team} (Spread: {selection.spread}) - Game ID: {selection.gameId}
+                    {selection.team} (Total: {selection.total}) - Game ID: {selection.gameId}
+                  </li>
                 {/each}
               </ul>
             </td>
-            <td>{bet.odds}</td>
-            <td>{bet.potentialPayout}</td>
-            <td>
-              <span class="result {bet.result.toLowerCase()}">{bet.result}</span>
-            </td>
+            <td>${bet.betPrice.toFixed(2)}</td>
+            <td>{bet.totalOdds.toFixed(2)}</td>
+            <td>${bet.potentialPayout.toFixed(2)}</td>
           </tr>
         {/each}
       </tbody>
     </table>
-  </div>
-  
+  {:else}
+    <p>You must be logged in to view this page. Redirecting...</p>
+  {/if}
+</div>
+
+<style>
+  .bet-table {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+  }
+
+  .bet-table th, .bet-table td {
+    border: 1px solid #ccc;
+    text-align: left;
+    padding: 8px;
+  }
+
+  .bet-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+
+  .bet-table ul {
+    margin: 0;
+    padding-left: 20px;
+    list-style: disc;
+  }
+</style>
