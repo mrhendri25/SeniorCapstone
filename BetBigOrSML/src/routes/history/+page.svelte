@@ -94,6 +94,8 @@
     border-collapse: collapse;
     font-family: Arial, sans-serif;
     font-size: 14px;
+    background-color: white;
+
   }
 
   .bet-table th, .bet-table td {

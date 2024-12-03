@@ -110,7 +110,7 @@
     top: 350px;
     right: 20px;
     font-size: 14px;
-    color: #ff0101f3;
+    color: rgb(246, 94, 94);
     margin-left: auto;
     padding-right: 20x;
   }
@@ -127,7 +127,7 @@
 
   .page_bar a {
     text-decoration: none;
-    color: #b60000;
+    color: rgb(246, 94, 94);
     margin-bottom: 10px;
     font-size: 16px;
   }
