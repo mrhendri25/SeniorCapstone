@@ -1,35 +1,37 @@
 <script>
-  import { goto } from '$app/navigation';
-  import { onMount } from 'svelte';
+  import { goto } from "$app/navigation";
+  import { onMount } from "svelte";
 
   let userBets = [];
   let isLoggedIn = false;
-  let username = '';
+  let username = "";
 
   // Check login status and retrieve username
   const checkLoginStatus = () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
       isLoggedIn = true;
-      const decodedToken = JSON.parse(atob(token.split('.')[1]));
+      const decodedToken = JSON.parse(atob(token.split(".")[1]));
       username = decodedToken.username;
     } else {
       isLoggedIn = false;
-      goto('/'); // Redirect to login or home page
+      goto("/"); // Redirect to login or home page
     }
   };
 
   // Fetch bets for the logged-in user
   const fetchUserBets = async () => {
     try {
-      const response = await fetch(`http://localhost:4000/api/useroutput?username=${username}`);
+      const response = await fetch(
+        `http://localhost:4000/api/useroutput?username=${username}`
+      );
       if (response.ok) {
         userBets = await response.json();
       } else {
-        console.error('Failed to fetch user bet data');
+        console.error("Failed to fetch user bet data");
       }
     } catch (error) {
-      console.error('Error fetching user bet data:', error);
+      console.error("Error fetching user bet data:", error);
     }
   };
 
@@ -66,10 +68,10 @@
             <td>
               <ul>
                 {#each bet.selections as selection}
-                <li>
-                  <div>Your Bet: {selection.team} {selection.type}</div>
-                  <div>Odds: {selection.line}</div>
-              </li>
+                  <li>
+                    <div>Your Bet: {selection.team} {selection.type}</div>
+                    <div>Odds: {selection.line}</div>
+                  </li>
                 {/each}
               </ul>
             </td>
@@ -94,10 +96,10 @@
     font-family: Arial, sans-serif;
     font-size: 14px;
     background-color: white;
-
   }
 
-  .bet-table th, .bet-table td {
+  .bet-table th,
+  .bet-table td {
     border: 1px solid #ccc;
     text-align: left;
     padding: 8px;
