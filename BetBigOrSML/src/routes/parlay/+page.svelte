@@ -242,7 +242,7 @@
         border: 1px solid #ccc;
         padding: 10px;
         border-radius: 8px;
-        background-color: #ffffff;
+        background-color: rgb(246, 94, 94);
         text-align: center;
     }
 
@@ -253,6 +253,7 @@
 
     h1, h2 {
         text-align: center;
+        color: #ffffff;
     }
 
     select {
@@ -277,7 +278,7 @@
         margin-top: 20px;
         text-align: center;
         padding: 10px;
-        background-color: #f0f0f0;
+        background-color: #000000;
         border-radius: 8px;
     }
 </style>
