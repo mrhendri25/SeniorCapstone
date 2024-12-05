@@ -92,30 +92,25 @@ app.get('/', (req, res) => {
   res.send('Welcome to the NFL Data API');
 });
 
-//function moneylineToDecimal(moneyline) {
-// return moneyline > 0 ? (moneyline / 100) + 1 : (100 / Math.abs(moneyline)) + 1;
-//}
+function moneylineToDecimal(moneyline) {
+  return moneyline > 0 ? (moneyline / 100) + 1 : (100 / Math.abs(moneyline)) + 1;
+}
 
-//function spreadToDecimal(spread) {
-//  return spread > 0 ? (spread / 100) + 1 : (100 / Math.abs(spread)) + 1;
-//}
+function spreadToDecimal(spread) {
+  return spread > 0 ? (spread / 100) + 1 : (100 / Math.abs(spread)) + 1;
+}
 
-//function totalToDecimal(total) {
-  //return total > 0 ? (total / 100) + 1 : (100 / Math.abs(total)) + 1;
-//}
-
-function convertToDecimalOdds(odds) {
-  return odds > 0 ? (odds / 100) + 1 : (100 / Math.abs(odds)) + 1;
+function totalToDecimal(total) {
+  return total > 0 ? (total / 100) + 1 : (100 / Math.abs(total)) + 1;
 }
 
 
 function calculateParlayOdds(selections) {
   return selections.reduce((totalOdds, selection) => {
-    const odds = convertToDecimalOdds(selection.line);
-    return totalOdds * odds;
+    const decimalOdds = moneylineToDecimal(selection.moneyline);
+    return totalOdds * decimalOdds;
   }, 1);
 }
-
 
 function calculatePotentialPayout(betAmount, totalOdds) {
   return betAmount * totalOdds;
@@ -245,8 +240,11 @@ app.get('/api/teseasondata', getData('NFLSeasonPlayerData', 'TE Season Statistic
 app.get('/api/spread', getData('BettingData', 'Spread'));
 app.get('/api/totals', getData('BettingData', 'Totals'));
 app.get('/api/moneyline', getData('BettingData', 'Moneyline'));
-app.get('/api/predictions', getData('ModelData', 'Predictions'));
 
+// Prediction data endpoints
+app.get('/api/moneylineprediction', getData('Predictions', 'Moneyline Prediction'));
+app.get('/api/spreadprediction', getData('Predictions', 'Spread Prediction'));
+app.get('/api/totalsprediction', getData('Predictions', 'Totals Prediction'));
 app.get('/api/logos', getData('nfl_database', 'team_logos'));
 
 app.listen(port, () => {

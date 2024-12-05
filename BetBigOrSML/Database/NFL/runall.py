@@ -19,7 +19,7 @@ def run_all_scripts():
     for script in scripts:
         subprocess.run(["python", script])
 
-schedule.every().day.at("02:00").do(run_all_scripts)
+schedule.every().day.at("14:09").do(run_all_scripts)
 
 while True:
     schedule.run_pending()

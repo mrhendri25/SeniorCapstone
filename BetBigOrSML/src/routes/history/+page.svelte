@@ -66,11 +66,10 @@
             <td>
               <ul>
                 {#each bet.selections as selection}
-                  <li>
-                    {selection.team} (Moneyline: {selection.moneyline}) - Game ID: {selection.gameId}
-                    {selection.team} (Spread: {selection.spread}) - Game ID: {selection.gameId}
-                    {selection.team} (Total: {selection.total}) - Game ID: {selection.gameId}
-                  </li>
+                <li>
+                  <div>Your Bet: {selection.team} {selection.type}</div>
+                  <div>Odds: {selection.line}</div>
+              </li>
                 {/each}
               </ul>
             </td>
