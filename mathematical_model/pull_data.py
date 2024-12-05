@@ -52,6 +52,7 @@ def get_schedule(week):
     schedules = nfl.import_schedules([2024])
     schedules = schedules[schedules['week'] == week]
     df_games = pd.DataFrame({
+        'game_id': list(schedules['game_id']),
         'home_team': list(schedules['home_team']),
         'away_team': list(schedules['away_team'])
     })
