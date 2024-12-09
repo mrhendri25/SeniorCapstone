@@ -67,7 +67,7 @@
               <ul>
                 {#each bet.selections as selection}
                 <li>
-                  <div>Your Bet: {selection.team} {selection.type}</div>
+                  <div>Your Bet: {selection.team} {selection.type.replace(/_/g, ' ')}</div>
                   <div>Odds: {selection.line}</div>
               </li>
                 {/each}

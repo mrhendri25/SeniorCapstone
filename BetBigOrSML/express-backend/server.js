@@ -92,17 +92,7 @@ app.get('/', (req, res) => {
   res.send('Welcome to the NFL Data API');
 });
 
-//function moneylineToDecimal(moneyline) {
-// return moneyline > 0 ? (moneyline / 100) + 1 : (100 / Math.abs(moneyline)) + 1;
-//}
 
-//function spreadToDecimal(spread) {
-//  return spread > 0 ? (spread / 100) + 1 : (100 / Math.abs(spread)) + 1;
-//}
-
-//function totalToDecimal(total) {
-  //return total > 0 ? (total / 100) + 1 : (100 / Math.abs(total)) + 1;
-//}
 
 function convertToDecimalOdds(odds) {
   return odds > 0 ? (odds / 100) + 1 : (100 / Math.abs(odds)) + 1;
@@ -210,6 +200,107 @@ app.get('/api/schedule', async (req, res) => {
     await client.close();
   }
 });
+
+app.get('/api/combine', async (req, res) => {
+  try {
+    await client.connect();
+
+    // Connect to the databases and collections
+    const nflDb = client.db('NFLData');
+    const scheduleCollection = nflDb.collection('NFL 2024-25 Schedule');
+    const modelDb = client.db('ModelData');
+    const predictionsCollection = modelDb.collection('Predictions');
+
+    // Fetch all games from both collections
+    const schedule = await scheduleCollection.find({}).toArray();
+    const predictions = await predictionsCollection.find({}).toArray();
+
+    // Define the fields to retain from the schedule collection
+    const retainFields = [
+      '_id', 'away_moneyline', 'away_score', 'away_spread', 'away_spread_odds', 'away_team',
+      'game_id', 'home_moneyline', 'home_score', 'home_spread', 'home_spread_odds', 'home_team',
+      'over_odds', 'season', 'spread_line', 'total', 'total_line', 'under_odds', 'week', 'winner'
+    ];
+
+    // Filter and combine the datasets
+    const combinedData = schedule.map(game => {
+      // Retain only the specified fields from the schedule
+      const filteredGame = Object.fromEntries(
+        Object.entries(game).filter(([key]) => retainFields.includes(key))
+      );
+
+      // Match the prediction data
+      const prediction = predictions.find(p => p.game_id === game.game_id);
+
+      if (prediction) {
+        // Calculate whether predictions are correct
+        const spreadcorrect = 
+          (game.winner === game.away_team && parseFloat(game.spread_line) > 0) || 
+          (game.winner === game.home_team && parseFloat(game.spread_line) < 0) ? 1 : 0;
+
+        const moneylinecorrect = game.winner === prediction.winner ? 1 : 0;
+
+        const actual_total = game.home_score + game.away_score;
+        const totalcorrect = 
+          (actual_total > game.total_line && prediction.avg_total_score > game.total_line) || 
+          (actual_total < game.total_line && prediction.avg_total_score < game.total_line) ? 1 : 0;
+
+        // Add the correctness fields to the prediction
+        prediction.spreadcorrect = spreadcorrect;
+        prediction.moneylinecorrect = moneylinecorrect;
+        prediction.totalcorrect = totalcorrect;
+      }
+
+      return {
+        ...filteredGame,
+        prediction: prediction || null, // Include prediction if it exists
+      };
+    });
+
+    // Calculate weekly prediction statistics
+    const weeklyStats = combinedData.reduce((stats, game) => {
+      const { week } = game;
+
+      if (!stats[week]) {
+        stats[week] = {
+          totalGames: 0,
+          spreadPredicted: 0,
+          moneylinePredicted: 0,
+          totalPredicted: 0,
+        };
+      }
+
+      stats[week].totalGames += 1;
+
+      if (game.prediction) {
+        if (game.prediction.spreadcorrect === 1) stats[week].spreadPredicted += 1;
+        if (game.prediction.moneylinecorrect === 1) stats[week].moneylinePredicted += 1;
+        if (game.prediction.totalcorrect === 1) stats[week].totalPredicted += 1;
+      }
+
+      return stats;
+    }, {});
+
+    // Convert the stats object to an array of weekly data
+    const weeklyResults = Object.keys(weeklyStats).map(week => ({
+      week,
+      totalGames: weeklyStats[week].totalGames,
+      spreadPredicted: weeklyStats[week].spreadPredicted,
+      moneylinePredicted: weeklyStats[week].moneylinePredicted,
+      totalPredicted: weeklyStats[week].totalPredicted,
+    }));
+
+    // Return the combined data and the weekly prediction statistics
+    res.json({ combinedData, weeklyResults });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  } finally {
+    await client.close();
+  }
+});
+
 
 // Generic data-fetching function for NFL player data and betting data
 function getData(databaseName, collectionName) {
