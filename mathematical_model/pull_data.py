@@ -53,6 +53,6 @@ def get_schedule(week):
     schedules = schedules[schedules['week'] == week]
     df_games = pd.DataFrame({
         'home_team': list(schedules['home_team']),
-        'away_team': list(schedules['away_team'])
+        'away_team': list(schedules['away_team']),
     })
     return df_games
