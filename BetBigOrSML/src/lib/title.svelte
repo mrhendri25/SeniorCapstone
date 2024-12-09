@@ -1,17 +1,17 @@
 <script>
-  import { goto } from '$app/navigation';
-  import { onMount } from 'svelte';
+  import { goto } from "$app/navigation";
+  import { onMount } from "svelte";
 
   let title = "BetBigOrSML";
   let username = null; // Store the username
   let isLoggedIn = false; // Track the login status
 
   onMount(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
 
     if (token) {
       // Decode or verify the token to extract username
-      const payload = JSON.parse(atob(token.split('.')[1])); // Decode the token
+      const payload = JSON.parse(atob(token.split(".")[1])); // Decode the token
       username = payload.username;
       isLoggedIn = true;
     }
@@ -19,42 +19,42 @@
 
   // Logout function to interact with the backend API
   async function logout() {
-  try {
-    const token = localStorage.getItem('token');
+    try {
+      const token = localStorage.getItem("token");
 
-    if (!token) {
-      console.error('No token found');
-      return;
+      if (!token) {
+        console.error("No token found");
+        return;
+      }
+
+      // Call the backend logout endpoint
+      const response = await fetch("http://localhost:4000/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token, // Include token in the Authorization header
+        },
+      });
+
+      if (response.ok) {
+        // Remove the token from localStorage upon successful logout
+        localStorage.removeItem("token");
+
+        // Update the frontend state
+        username = null;
+        isLoggedIn = false;
+
+        console.log("Logged out successfully");
+
+        // Redirect to the login page or home
+        goto("/");
+      } else {
+        console.error("Failed to log out:", await response.text());
+      }
+    } catch (error) {
+      console.error("An error occurred during logout:", error);
     }
-
-    // Call the backend logout endpoint
-    const response = await fetch('http://localhost:4000/logout', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: token, // Include token in the Authorization header
-      },
-    });
-
-    if (response.ok) {
-      // Remove the token from localStorage upon successful logout
-      localStorage.removeItem('token');
-
-      // Update the frontend state
-      username = null;
-      isLoggedIn = false;
-
-      console.log('Logged out successfully');
-
-      // Redirect to the login page or home
-      goto('/');
-    } else {
-      console.error('Failed to log out:', await response.text());
-    }
-  } catch (error) {
-    console.error('An error occurred during logout:', error);
   }
-}
 </script>
 
 <div class="title">
@@ -85,7 +85,8 @@
   <a href="/players">Players</a>
   <p></p>
 
-  <button on:click={logout}>Logout</button> <!-- Logout button -->
+  <button on:click={logout}>Logout</button>
+  <!-- Logout button -->
 </div>
 
 <style>
@@ -133,7 +134,7 @@
   }
 
   .page_bar a:hover {
-    color: #007BFF;
+    color: #ac0808;
   }
 
   .page_bar button {
