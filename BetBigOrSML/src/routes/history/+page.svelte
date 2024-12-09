@@ -68,17 +68,14 @@
             <td>
               <ul>
                 {#each bet.selections as selection}
-<<<<<<< HEAD
                 <li>
                   <div>Your Bet: {selection.team} {selection.type.replace(/_/g, ' ')}</div>
                   <div>Odds: {selection.line}</div>
               </li>
-=======
                   <li>
                     <div>Your Bet: {selection.team} {selection.type}</div>
                     <div>Odds: {selection.line}</div>
                   </li>
->>>>>>> c9a10fa8d15a003c76c0dbf220f29d937fc3a1a0
                 {/each}
               </ul>
             </td>

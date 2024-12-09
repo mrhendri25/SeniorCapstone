@@ -2,7 +2,6 @@
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
 
-<<<<<<< HEAD
     let allGames = [];
     let weekGames = [];
     let parlay = [];
@@ -23,7 +22,6 @@
             await fetchWeeklyRecap()
         }
     });
-=======
   let allGames = [];
   let weekGames = [];
   let parlay = [];
@@ -41,7 +39,6 @@
       await fetchAllGames();
     }
   });
->>>>>>> c9a10fa8d15a003c76c0dbf220f29d937fc3a1a0
 
   const checkLoginStatus = () => {
     const token = localStorage.getItem("token");
@@ -119,7 +116,6 @@
       selections,
     };
 
-<<<<<<< HEAD
     async function fetchWeeklyRecap() {
     try {
         const response = await fetch('http://localhost:4000/api/combine');
@@ -224,7 +220,6 @@ async function fetchPredictions() {
             userId: username,
             betPrice: parseFloat(betPrice),
             selections
-=======
     try {
       const response = await fetch("http://localhost:4000/api/input", {
         method: "POST",
@@ -246,7 +241,6 @@ async function fetchPredictions() {
           betPrice: betSlip.betPrice,
           totalOdds: totalOdds.toFixed(2),
           potentialPayout: potentialPayout.toFixed(2),
->>>>>>> c9a10fa8d15a003c76c0dbf220f29d937fc3a1a0
         };
 
         clearParlay();
@@ -271,11 +265,8 @@ async function fetchPredictions() {
 </svelte:head>
 
 {#if isLoggedIn}
-<<<<<<< HEAD
     <h1>Matchups</h1>
-=======
   <h1>Matchups with Betting Lines</h1>
->>>>>>> c9a10fa8d15a003c76c0dbf220f29d937fc3a1a0
 
   <select bind:value={selectedWeek} on:change={filterGamesByWeek}>
     {#each Array.from({ length: 18 }, (_, i) => i + 1) as week}
@@ -283,13 +274,11 @@ async function fetchPredictions() {
     {/each}
   </select>
 
-<<<<<<< HEAD
     {#if weekGames.every(game => game.completed)}
         <h2>This Week's Matchups</h2>
     {/if}
 
     {#if weekGames.length > 0}
-        <div class="game-grid">
             {#each weekGames as game}
                 <div class="game-item">
                     {#if game.completed}
@@ -387,13 +376,11 @@ async function fetchPredictions() {
         <p>No selections added to your parlay yet.</p>
     {/if}
 {/if}
-=======
   {#if weekGames.length > 0}
     <div class="game-grid">
       {#each weekGames as game}
         <div class="game-item">
           <strong>{game.away_team}</strong> vs.
-          <strong>{game.home_team}</strong><br />
           Date: {game.gameday} | Time: {game.gametime}<br />
           Location: {game.stadium} ({game.location})<br /><br />
 
@@ -507,13 +494,11 @@ async function fetchPredictions() {
   {:else}
     <p>No selections added to your parlay yet.</p>
   {/if}
->>>>>>> c9a10fa8d15a003c76c0dbf220f29d937fc3a1a0
 
   {#if submittedBet}
     <div class="bet-summary">
       <h3>Bet Summary</h3>
       <p><strong>Bet Amount:</strong> ${submittedBet.betPrice}</p>
-      <p><strong>Total Odds:</strong> {submittedBet.totalOdds}</p>
       <p><strong>Potential Payout:</strong> ${submittedBet.potentialPayout}</p>
     </div>
   {/if}
@@ -533,7 +518,6 @@ async function fetchPredictions() {
     padding: 20px;
   }
 
-<<<<<<< HEAD
     .game-item {
         border: 1px solid #ccc;
         padding: 10px;
@@ -541,7 +525,6 @@ async function fetchPredictions() {
         background-color: #ffffff;
         text-align: center;
     }
-=======
   .game-item {
     border: 1px solid #ccc;
     padding: 10px;
@@ -549,24 +532,20 @@ async function fetchPredictions() {
     background-color: rgb(246, 94, 94);
     text-align: center;
   }
->>>>>>> c9a10fa8d15a003c76c0dbf220f29d937fc3a1a0
 
   .game-item button {
     width: 100%;
     margin: 1px 0;
   }
 
-<<<<<<< HEAD
     h1, h2 {
         text-align: center;
     }
-=======
   h1,
   h2 {
     text-align: center;
     color: #ffffff;
   }
->>>>>>> c9a10fa8d15a003c76c0dbf220f29d937fc3a1a0
 
   select {
     margin: 10px auto;
@@ -586,7 +565,6 @@ async function fetchPredictions() {
     margin-right: 10px;
   }
 
-<<<<<<< HEAD
     .bet-summary {
         margin-top: 20px;
         text-align: center;
@@ -594,7 +572,6 @@ async function fetchPredictions() {
         background-color: #eaeaea;
         border-radius: 8px;
     }
-=======
   .bet-summary {
     margin-top: 20px;
     text-align: center;
@@ -602,5 +579,4 @@ async function fetchPredictions() {
     background-color: #000000;
     border-radius: 8px;
   }
->>>>>>> c9a10fa8d15a003c76c0dbf220f29d937fc3a1a0
 </style>
