@@ -12,14 +12,14 @@
     let username = '';
     let submittedBet = null;
     let predictions = {};
-    let recap ={};
+    let recap = {};
 
     onMount(async () => {
         checkLoginStatus();
         if (isLoggedIn) {
             await fetchAllGames();
             await fetchPredictions();
-            await fetchWeeklyRecap()
+            await fetchWeeklyRecap();
         }
     });
 
@@ -36,53 +36,50 @@
     };
 
     async function fetchWeeklyRecap() {
-    try {
-        const response = await fetch('http://localhost:4000/api/combine');
-        if (response.ok) {
-            const data = await response.json();
-            console.log(data);  // Log the data to check its structure
+        try {
+            const response = await fetch('http://localhost:4000/api/combine');
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data); // Log the data to check its structure
 
-            recap = {}; // Reset recap data
-            const weeklyResults = []; // To store weekly summary results
+                recap = {}; // Reset recap data
+                const weeklyResults = []; // To store weekly summary results
 
-            // Fetching game data and predictions
-            data.combinedData.forEach(gameRecap => {
-                recap[gameRecap.game_id] = gameRecap.prediction;  // Store the prediction object directly for each game
-            });
+                // Fetching game data and predictions
+                data.combinedData.forEach(gameRecap => {
+                    recap[gameRecap.game_id] = gameRecap.prediction; // Store the prediction object directly for each game
+                });
 
-            // Fetching weekly results
-            weeklyResults.push(...data.weeklyResults);  // Assuming weeklyResults is an array
+                // Fetching weekly results
+                weeklyResults.push(...data.weeklyResults); // Assuming weeklyResults is an array
 
-            // Log recap and weeklyResults for debugging
-            console.log("Recap:", recap);
-            console.log("Weekly Results:", weeklyResults);
-
-        } else {
-            console.error('Failed to fetch recap data');
+                // Log recap and weeklyResults for debugging
+                console.log('Recap:', recap);
+                console.log('Weekly Results:', weeklyResults);
+            } else {
+                console.error('Failed to fetch recap data');
+            }
+        } catch (error) {
+            console.error('Error fetching recap data:', error);
         }
-    } catch (error) {
-        console.error('Error fetching recap data:', error);
     }
-}
 
-
-async function fetchPredictions() {
-    try {
-        const response = await fetch('http://localhost:4000/api/predictions');
-        if (response.ok) {
-            const data = await response.json();
-            // Store predictions by game_id
-            data.forEach(prediction => {
-                predictions[prediction.game_id] = prediction;
-            });
-        } else {
-            console.error('Failed to fetch predictions');
+    async function fetchPredictions() {
+        try {
+            const response = await fetch('http://localhost:4000/api/predictions');
+            if (response.ok) {
+                const data = await response.json();
+                // Store predictions by game_id
+                data.forEach(prediction => {
+                    predictions[prediction.game_id] = prediction;
+                });
+            } else {
+                console.error('Failed to fetch predictions');
+            }
+        } catch (error) {
+            console.error('Error fetching predictions:', error);
         }
-    } catch (error) {
-        console.error('Error fetching predictions:', error);
     }
-}
-
 
     async function fetchAllGames() {
         try {
@@ -152,7 +149,17 @@ async function fetchPredictions() {
                 const result = await response.json();
                 console.log(result.message);
 
-                const totalOdds = parlay.reduce((acc, pick) => acc * (1 + pick.line / 100), 1);
+                // Corrected odds calculation
+                const totalOdds = parlay.reduce((acc, pick) => {
+                    if (pick.line > 0) {
+                        // Positive odds
+                        return acc * ((pick.line / 100) + 1);
+                    } else {
+                        // Negative odds
+                        return acc * ((100 / Math.abs(pick.line)) + 1);
+                    }
+                }, 1);
+
                 const potentialPayout = betSlip.betPrice * totalOdds;
 
                 submittedBet = {
@@ -177,6 +184,7 @@ async function fetchPredictions() {
         weekGames = weekGames.map(game => ({ ...game, selected: null }));
     }
 </script>
+
 
 <svelte:head>
     <title>Betting - BetBigOrSML</title>
@@ -358,7 +366,7 @@ async function fetchPredictions() {
         margin-top: 20px;
         text-align: center;
         padding: 10px;
-        background-color: #eaeaea;
+        background-color: #3a3939;
         border-radius: 8px;
     }
 </style>

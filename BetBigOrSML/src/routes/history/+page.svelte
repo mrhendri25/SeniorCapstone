@@ -68,12 +68,15 @@
             <td>
               <ul>
                 {#each bet.selections as selection}
-                <li>
+                  <!-- <li>
                   <div>Your Bet: {selection.team} {selection.type}</div>
                   <div>Odds: {selection.line}</div>
-              </li>
+              </li>   this was shown twice loser!-->
                   <li>
-                    <div>Your Bet: {selection.team} {selection.type}</div>
+                    <div>
+                      Your Bet: {selection.team}
+                      {selection.type.replace(/_/g, " ")}
+                    </div>
                     <div>Odds: {selection.line}</div>
                   </li>
                 {/each}
@@ -123,6 +126,4 @@
   .bet-table ul li div {
     color: black;
   }
-
-  
 </style>
