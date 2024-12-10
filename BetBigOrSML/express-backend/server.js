@@ -92,12 +92,9 @@ app.get('/', (req, res) => {
   res.send('Welcome to the NFL Data API');
 });
 
-
-
 function convertToDecimalOdds(odds) {
   return odds > 0 ? (odds / 100) + 1 : (100 / Math.abs(odds)) + 1;
 }
-
 
 function calculateParlayOdds(selections) {
   return selections.reduce((totalOdds, selection) => {
@@ -105,7 +102,6 @@ function calculateParlayOdds(selections) {
     return totalOdds * odds;
   }, 1);
 }
-
 
 function calculatePotentialPayout(betAmount, totalOdds) {
   return betAmount * totalOdds;

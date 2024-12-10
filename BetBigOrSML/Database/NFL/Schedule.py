@@ -1,6 +1,6 @@
-import nfl_data_py as nfl
 import pymongo
 from pymongo import MongoClient
+import nfl_data_py as nfl
 
 # MongoDB connection details
 mongo_uri = "mongodb+srv://sdeck1313:A!!yp3dr02020@statistics.b04y7.mongodb.net/"
@@ -27,9 +27,7 @@ def add_spreads(game):
         game['away_spread'] = "No Spread"
     
     return game
-
 nfl_schedule = nfl_schedule.apply(add_spreads, axis=1)
-
 def determine_winner(game):
     if game['home_score'] is not None and game['away_score'] is not None:
         if game['home_score'] > game['away_score']:
@@ -37,9 +35,7 @@ def determine_winner(game):
         elif game['away_score'] > game['home_score']:
             return game['away_team']
     return None
-
 nfl_schedule['winner'] = nfl_schedule.apply(determine_winner, axis=1)
-
 # Convert the DataFrame to a list of dictionaries
 schedule_dict = nfl_schedule.to_dict('records')
 
@@ -49,4 +45,5 @@ schedule_collection.delete_many({})
 # Insert the updated data into MongoDB
 schedule_collection.insert_many(schedule_dict)
 
+print("2024 NFL schedule has been successfully updated in MongoDB.")
 print("2024 NFL schedule has been successfully updated in MongoDB with winner and spread information.")
