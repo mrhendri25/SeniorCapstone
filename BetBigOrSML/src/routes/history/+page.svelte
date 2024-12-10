@@ -98,8 +98,8 @@
     margin: 0 auto;
     border-collapse: collapse;
     font-family: Arial, sans-serif;
-    font-size: 14px;
-    background-color: white;
+    font-size: 20px;
+    background-color: rgb(90, 90, 90);
   }
 
   .bet-table th,
@@ -119,4 +119,10 @@
     padding-left: 20px;
     list-style: disc;
   }
+
+  .bet-table ul li div {
+    color: black;
+  }
+
+  
 </style>
