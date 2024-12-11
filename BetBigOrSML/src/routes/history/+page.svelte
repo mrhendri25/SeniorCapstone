@@ -102,7 +102,7 @@
     border-collapse: collapse;
     font-family: Arial, sans-serif;
     font-size: 20px;
-    background-color: rgb(90, 90, 90);
+    background-color: rgb(214, 208, 208);
   }
 
   .bet-table th,
