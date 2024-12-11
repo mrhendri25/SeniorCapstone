@@ -315,7 +315,8 @@
               )}<br />
               Estimated Total: {predictions[
                 game.game_id
-              ].avg_total_score.toFixed(2)}
+              ].avg_total_score.toFixed(2)}<br />
+              Win Percentage: {predictions[game.game_id].win_pct.toFixed(2)}
             {/if}
           {/if}
         </div>
@@ -325,17 +326,10 @@
     <p>Loading games for Week {selectedWeek}...</p>
   {/if}
   {#if weekGames.every((game) => game.completed)}
-    <h2>This Week's Predictions Recap</h2>
-    {#each weekGames as game}
-      {#if recap[game.game_id]}
-        <div>
-          <strong>Moneyline: {recap[game.game_id].moneylinecorrect}</strong><br
-          />
-          <strong>Spread: {recap[game.game_id].spreadcorrect}</strong><br />
-          <strong>Total: {recap[game.game_id].totalcorrect}</strong>
-        </div>
-      {/if}
-    {/each}
+    <h2>
+      This week has been completed please select another week to create a
+      parlay!
+    </h2>
   {:else}
     <h2>Your Parlay</h2>
     {#if parlay.length > 0}
