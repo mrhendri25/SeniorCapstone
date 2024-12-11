@@ -1,5 +1,5 @@
 <script>
-  import { goto } from "$app/navigation"; // Import the 'goto' function from SvelteKit for navigation
+  import { goto } from "$app/navigation";
   import axios from "axios";
 
   let username = "";
@@ -7,7 +7,7 @@
   let confirmPassword = "";
   let errorMessage = "";
   let successMessage = "";
-  let isRegistering = false; // Toggle between Register and Login forms
+  let isRegistering = false;
 
   // Handle login
   const handleLogin = async () => {
@@ -16,20 +16,18 @@
         username,
         password,
       });
-      localStorage.setItem("token", response.data.token); // Store token in localStorage
+      localStorage.setItem("token", response.data.token);
 
       successMessage = "Login successful!";
       errorMessage = "";
 
-      // Redirect to homepage after successful login
-      goto("/home"); // Redirect to the homepage (or adjust path if needed)
+      goto("/home");
     } catch (error) {
       errorMessage = "Invalid username or password";
       successMessage = "";
     }
   };
 
-  // Handle registration
   const handleRegister = async () => {
     if (password !== confirmPassword) {
       errorMessage = "Passwords do not match!";
@@ -43,7 +41,7 @@
       });
       successMessage = "Registration successful! You can now login.";
       errorMessage = "";
-      isRegistering = false; // Switch to login after successful registration
+      isRegistering = false;
     } catch (error) {
       errorMessage = "Error registering user";
       successMessage = "";

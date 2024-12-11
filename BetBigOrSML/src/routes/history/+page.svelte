@@ -6,7 +6,6 @@
   let isLoggedIn = false;
   let username = "";
 
-  // Check login status and retrieve username
   const checkLoginStatus = () => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -15,11 +14,10 @@
       username = decodedToken.username;
     } else {
       isLoggedIn = false;
-      goto("/"); // Redirect to login or home page
+      goto("/");
     }
   };
 
-  // Fetch bets for the logged-in user
   const fetchUserBets = async () => {
     try {
       const response = await fetch(
@@ -35,11 +33,10 @@
     }
   };
 
-  // Initialize on component mount
   onMount(() => {
     checkLoginStatus();
     if (isLoggedIn) {
-      fetchUserBets(); // Fetch bets for the logged-in user
+      fetchUserBets();
     }
   });
 </script>

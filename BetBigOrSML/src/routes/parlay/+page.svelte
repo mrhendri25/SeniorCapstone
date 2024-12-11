@@ -31,7 +31,7 @@
       username = decodedToken.username;
     } else {
       isLoggedIn = false;
-      goto("/"); // Redirect to login or home page
+      goto("/");
     }
   };
 
@@ -40,20 +40,18 @@
       const response = await fetch("http://localhost:4000/api/combine");
       if (response.ok) {
         const data = await response.json();
-        console.log(data); // Log the data to check its structure
+        console.log(data);
 
-        recap = {}; // Reset recap data
-        const weeklyResults = []; // To store weekly summary results
+        recap = {};
+        const weeklyResults = [];
 
-        // Fetching game data and predictions
         data.combinedData.forEach((gameRecap) => {
-          recap[gameRecap.game_id] = gameRecap.prediction; // Store the prediction object directly for each game
+          recap[gameRecap.game_id] = gameRecap.prediction;
         });
 
         // Fetching weekly results
-        weeklyResults.push(...data.weeklyResults); // Assuming weeklyResults is an array
+        weeklyResults.push(...data.weeklyResults);
 
-        // Log recap and weeklyResults for debugging
         console.log("Recap:", recap);
         console.log("Weekly Results:", weeklyResults);
       } else {
@@ -105,7 +103,7 @@
   }
 
   function toggleParlay(team, line, game, type) {
-    if (game.completed) return; // Prevent interaction for completed games
+    if (game.completed) return;
 
     const index = parlay.findIndex(
       (pick) => pick.game.game_id === game.game_id && pick.type === type
@@ -153,7 +151,6 @@
         const result = await response.json();
         console.log(result.message);
 
-        // Corrected odds calculation
         const totalOdds = parlay.reduce((acc, pick) => {
           if (pick.line > 0) {
             // Positive odds
@@ -232,8 +229,12 @@
             <strong>Model Predictions:</strong><br />
             {#if predictions[game.game_id]}
               Winner: {predictions[game.game_id].winner}<br />
-              Estimated Spread: {predictions[game.game_id].avg_pt_diff.toFixed(2)}<br />
-              Estimated Total: {predictions[game.game_id].avg_total_score.toFixed(2)}<br />
+              Estimated Spread: {predictions[game.game_id].avg_pt_diff.toFixed(
+                2
+              )}<br />
+              Estimated Total: {predictions[
+                game.game_id
+              ].avg_total_score.toFixed(2)}<br />
               Win Percentage: {predictions[game.game_id].win_pct.toFixed(2)}
             {/if}
           {:else}

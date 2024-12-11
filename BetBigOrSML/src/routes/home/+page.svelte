@@ -35,12 +35,12 @@
   }
 
   onMount(() => {
-    checkLoginStatus(); // Check login status when the page loads
+    checkLoginStatus();
     interval = setInterval(nextImage, 3000); // Start the image carousel
   });
 
   onDestroy(() => {
-    clearInterval(interval); // Clear the interval when the component is destroyed
+    clearInterval(interval);
   });
 </script>
 

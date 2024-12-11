@@ -14,12 +14,12 @@
       username = decodedToken.username;
     } else {
       isLoggedIn = false;
-      goto("/"); // Redirect to login or home page
+      goto("/");
     }
   };
 
   onMount(() => {
-    checkLoginStatus(); // Check login status on mount
+    checkLoginStatus();
   });
 </script>
 

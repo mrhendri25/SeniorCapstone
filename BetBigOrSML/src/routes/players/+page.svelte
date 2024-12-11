@@ -4,21 +4,19 @@
   import { onMount } from "svelte";
   import { writable } from "svelte/store";
 
-  const players = writable([]); // Store for all players' data
-  const searchTerm = writable(""); // Store for search term input
-  let filteredPlayers = []; // Array of filtered players
-  let uniquePlayers = []; // Array of unique players
-  let selectedPlayer = null; // Holds selected player's data
-  let selectedPlayerStats = []; // Holds weekly stats for the selected player
+  const players = writable([]);
+  const searchTerm = writable("");
+  let filteredPlayers = [];
+  let uniquePlayers = [];
+  let selectedPlayer = null;
+  let selectedPlayerStats = [];
 
-  let leadingRusher = null; // Leading player in rushing yards
-  let leadingPasser = null; // Leading player in passing yards
-  let leadingReceiver = null; // Leading player in receiving yards
+  let leadingRusher = null;
+  let leadingPasser = null;
+  let leadingReceiver = null;
 
-  // Fetch players' data from the backend for all positions
   async function fetchPlayers() {
     try {
-      // Fetch data from all four APIs
       const qbResponse = await fetch("http://localhost:4000/api/qbweeklydata");
       const rbResponse = await fetch("http://localhost:4000/api/rbweeklydata");
       const teResponse = await fetch("http://localhost:4000/api/teweeklydata");
@@ -33,13 +31,11 @@
         throw new Error("Network response was not ok");
       }
 
-      // Parse the responses
       const qbData = await qbResponse.json();
       const rbData = await rbResponse.json();
       const teData = await teResponse.json();
       const wrData = await wrResponse.json();
 
-      // Combine all player data into one array
       return [...qbData, ...rbData, ...teData, ...wrData];
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -47,23 +43,19 @@
     }
   }
 
-  // Execute when the component is mounted
   onMount(async () => {
     const allPlayersData = await fetchPlayers();
     players.set(allPlayersData);
 
-    // Extract unique players based on their player_id
     uniquePlayers = Array.from(
       new Map(
         allPlayersData.map((player) => [player.player_id, player])
       ).values()
     );
 
-    // Calculate leading players
     calculateLeaders(allPlayersData);
   });
 
-  // Calculate leading players based on stats
   function calculateLeaders(allPlayersData) {
     leadingRusher = allPlayersData.reduce(
       (prev, current) =>
@@ -82,7 +74,6 @@
     );
   }
 
-  // Filter players based on the search term
   $: {
     const term = $searchTerm.toLowerCase();
     filteredPlayers = uniquePlayers.filter((player) =>
@@ -90,15 +81,13 @@
     );
   }
 
-  // Select player and get all weekly stats for that player
   function selectPlayer(player) {
     selectedPlayer = player; // Store basic player info
     selectedPlayerStats = $players.filter(
       (p) => p.player_id === player.player_id
-    ); // Get all weekly stats for the selected player
+    );
   }
 
-  // Clear the selected player and return to the player list
   function clearSelection() {
     selectedPlayer = null;
     selectedPlayerStats = [];
@@ -137,7 +126,6 @@
   </div>
 </div>
 
-<!-- Show the player list only if the search term is not empty -->
 {#if $searchTerm.length > 0}
   <ul>
     {#each filteredPlayers as player}
@@ -153,7 +141,6 @@
   </ul>
 {/if}
 
-<!-- Show player details with all weekly stats in a table if a player is selected -->
 {#if selectedPlayer}
   <div class="player-details">
     <img
@@ -166,13 +153,11 @@
       <p>Team: {selectedPlayer.recent_team}</p>
       <p>Position: {selectedPlayer.position}</p>
 
-      <!-- Modify the stats table to display position-specific stats -->
       <table class="stats-table">
         <thead>
           <tr>
             <th>Week</th>
             <th>Opponent</th>
-            <!-- Conditional columns based on the selected player's position -->
             {#if selectedPlayer.position_group === "QB"}
               <th>Completions / Attempts</th>
               <th>Passing Yards</th>
@@ -190,7 +175,6 @@
               <th>Receiving TDs</th>
             {/if}
 
-            <!-- Common columns for all positions -->
             <th>Fantasy Points</th>
           </tr>
         </thead>
@@ -200,7 +184,6 @@
               <td>{week.week}</td>
               <td>{week.opponent_team}</td>
 
-              <!-- QB-specific stats -->
               {#if selectedPlayer.position_group === "QB"}
                 <td>{week.completions} / {week.attempts}</td>
                 <td>{week.passing_yards}</td>
@@ -209,7 +192,6 @@
                 <td>{week.sacks} (Yards lost: {week.sack_yards})</td>
               {/if}
 
-              <!-- RB, WR, TE stats -->
               {#if selectedPlayer.position_group === "RB" || selectedPlayer.position_group === "WR" || selectedPlayer.position_group === "TE"}
                 <td>{week.carries}</td>
                 <td>{week.rushing_yards}</td>
@@ -219,7 +201,6 @@
                 <td>{week.receiving_tds}</td>
               {/if}
 
-              <!-- Common stats -->
               <td>{week.fantasy_points.toFixed(2)}</td>
             </tr>
           {/each}
